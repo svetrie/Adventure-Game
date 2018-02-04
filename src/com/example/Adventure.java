@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Adventure {
@@ -7,16 +8,23 @@ public class Adventure {
     private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
     private static final Scanner scan = new Scanner(System.in);
 
+    private static final String TAKE_ITEM = "take";
+    private static final String DROP_ITEM = "drop";
+    private static final String GO_DIRECTION = "go";
+    private static final String QUIT_GAME = "quit";
+    private static final String EXIT_GAME = "exit";
+    private static final String DISPLAY_ITEMS = "list";
+
     private GameWorld gameWorld;
     private String startingRoomName;
     private String endingRoomName;
-    private String currentRoomName;
+    private ArrayList<String> itemInventory;
     private Room currentRoom;
 
     public static void main(String[] args) {
         Adventure a = new Adventure();
         a.loadGameWorld();
-        a.printCurrentRoom();
+        a.playAdventureGame();
     }
 
     public void loadGameWorld() {
@@ -33,8 +41,8 @@ public class Adventure {
 
         endingRoomName = gameWorld.getEndingRoom();
         startingRoomName = gameWorld.getStartingRoom();
-        currentRoomName = startingRoomName;
-        currentRoom = gameWorld.getRoomByName(currentRoomName);
+        currentRoom = gameWorld.getRoomByName(startingRoomName);
+        itemInventory = new ArrayList<String>();
     }
 
     public void printItemsInRoom() {
@@ -52,26 +60,28 @@ public class Adventure {
                 }
             }
         }
+
+        System.out.println();
     }
 
     public void printDirectionsFromRoom() {
         System.out.println("From here you can go: ");
 
         for (Direction direction : currentRoom.getDirections()) {
-            System.out.println(direction.getDirectionName() + " to " + direction.getRoom());
+            System.out.println("\t" + direction.getDirectionName() + " to " + direction.getRoom());
         }
     }
 
     public void printCurrentRoom() {
         System.out.println(currentRoom.getDescription());
 
-        if(currentRoomName.equals(endingRoomName)) {
+        if(currentRoom.getName().equals(endingRoomName)) {
             System.out.println("You've reached your destination");
             System.out.println("Congrats on completing the game!");
             System.exit(0);
         } else {
 
-            if(currentRoomName.equals(startingRoomName)) {
+            if(currentRoom.getName().equals(startingRoomName)) {
                 System.out.println("Your journey begins here");
             }
 
@@ -80,8 +90,88 @@ public class Adventure {
         }
     }
 
+    public void addValidItem(String itemName) {
+        boolean isValidItem = false;
 
-    /* uses the JsonFileLoader class to generate a new GameWorld object
-       initialize startingRoom, endingRoom, and set currentRoom = to starting room
-    */
+        for (String item : currentRoom.getItems()) {
+
+            if (item.equals(itemName)) {
+                itemInventory.add(item);
+                isValidItem = true;
+            }
+        }
+
+        if (isValidItem) {
+            currentRoom.removeItem(itemName);
+            System.out.println("You are carrying " + itemName);
+        } else {
+            System.out.println("You can't take " + itemName);
+        }
+    }
+
+    public void dropValidItem(String itemName) {
+        boolean isValidItem = false;
+
+        for (String item : itemInventory) {
+
+            if (item.equals(itemName)) {
+                itemInventory.remove(item);
+                isValidItem = true;
+            }
+        }
+
+        if (isValidItem) {
+            System.out.println("You dropped " + itemName);
+        } else {
+            System.out.println("You can't drop " + itemName);
+        }
+    }
+
+    public Direction getValidDirection(String directionName) {
+        for (Direction direction : currentRoom.getDirections()) {
+
+            if (direction.getDirectionName().toLowerCase().equals(directionName)) {
+                return direction;
+            }
+        }
+
+        return null;
+    }
+
+    public void changeRooms(String directionName) {
+       Direction direction = getValidDirection(directionName);
+
+        if (direction != null) {
+            currentRoom = gameWorld.getRoomByName(direction.getRoom());
+        } else {
+            System.out.print("I can't go " + directionName);
+        }
+    }
+
+    public void usersNextMove(){
+        System.out.println("What would you like to do?");
+        String userInput = scan.nextLine();
+        String[] usersNextMove = userInput.toLowerCase().split("\\s+");
+
+        if (usersNextMove[0].equals(TAKE_ITEM) && usersNextMove.length > 1) {
+            addValidItem(usersNextMove[1]);
+        } else if (usersNextMove[0].equals(DROP_ITEM) && usersNextMove.length > 1) {
+            dropValidItem(usersNextMove[0]);
+        } else if (usersNextMove[0].equals(GO_DIRECTION) && usersNextMove.length > 1) {
+            changeRooms(usersNextMove[1]);
+        } else if (usersNextMove[0].equals(DISPLAY_ITEMS)) {
+            printItemsInRoom();
+        } else if (usersNextMove[0].equals(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
+            System.exit(0);
+        } else {
+            System.out.println("Sorry I don't understand \'" + userInput + "\'");
+        }
+    }
+
+    public void playAdventureGame() {
+        while(!currentRoom.getName().equals(endingRoomName)) {
+            printCurrentRoom();
+            usersNextMove();
+        }
+    }
 }

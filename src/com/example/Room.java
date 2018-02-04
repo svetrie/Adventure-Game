@@ -20,6 +20,19 @@ public class Room {
         return items;
     }
 
+    public void addItem(String itemName) {
+        items.add(itemName);
+    }
+
+    public void removeItem(String itemName) {
+        for (String item : items) {
+
+            if (itemName.equalsIgnoreCase(itemName)) {
+                items.remove(item);
+            }
+        }
+    }
+
     public Direction[] getDirections() {
         return directions;
     }
