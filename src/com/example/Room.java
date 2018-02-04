@@ -1,9 +1,11 @@
 package com.example;
 
+import java.util.ArrayList;
+
 public class Room {
     private String name;
     private String description;
-    private String[] items;
+    private ArrayList<String> items;
     private Direction[] directions;
 
     public String getName() {
@@ -14,7 +16,7 @@ public class Room {
         return description;
     }
 
-    public String[] getItems() {
+    public ArrayList<String> getItems() {
         return items;
     }
 

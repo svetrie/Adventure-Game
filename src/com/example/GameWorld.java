@@ -16,4 +16,15 @@ public class GameWorld {
     public Room[] getRooms() {
         return rooms;
     }
+
+    public Room getRoomByName(String roomName) {
+        for (Room room : rooms) {
+
+            if (room.getName().equals(roomName)) {
+                return room;
+            }
+        }
+
+        return null;
+    }
 }

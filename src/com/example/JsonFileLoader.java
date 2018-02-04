@@ -11,29 +11,38 @@ import java.net.URL;
 
 public class JsonFileLoader {
 
-    public static void getJsonFileUsingUrl(String url) throws UnirestException, MalformedURLException {
+    public static GameWorld parseDefaultJsonFileUsingUrl(String url) {
         final HttpResponse<String> stringHttpResponse;
-
-        new URL(url);
-
-        stringHttpResponse = Unirest.get(url).asString();
-        String jsonString = stringHttpResponse.getBody();
-        Gson gson = new Gson();
-        final GameWorld gameWorld = gson.fromJson(jsonString, GameWorld.class);
-
-        System.out.println(gameWorld.getStartingRoom());
-        System.out.println(gameWorld.getEndingRoom());
-    }
-
-    public static void main(String args[]) {
+        GameWorld gameWorld = null;
 
         try {
-            getJsonFileUsingUrl("https://courses.engr.illinois.edu/cs126/adventure/siebel.json");
+            new URL(url);
+
+            stringHttpResponse = Unirest.get(url).asString();
+            String jsonString = stringHttpResponse.getBody();
+
+            Gson gson = new Gson();
+            gameWorld = gson.fromJson(jsonString, GameWorld.class);
+
+        } catch (MalformedURLException e) {
+            System.out.println("Invalid URL");
         } catch (UnirestException e) {
             e.printStackTrace();
             System.out.println("Network not responding");
-        } catch (MalformedURLException e) {
-            System.out.println("Invalid URL");
+        }
+
+        return gameWorld;
+    }
+
+    public static GameWorld parseJsonFileUsingFilePath() {
+        return null;
+    }
+
+    public static void main(String args[]) {
+        GameWorld g = parseDefaultJsonFileUsingUrl("HI");
+        Room[] r = g.getRooms();
+        for(String item: r[1].getItems()) {
+            System.out.println(item);
         }
     }
 }
