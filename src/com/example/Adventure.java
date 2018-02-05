@@ -91,6 +91,8 @@ public class Adventure {
     }
 
     public void addValidItem(String itemName) {
+        //Used a boolean flag variable rather than just removing item inside
+        //for loop if it is found to avoid a ConcurrentModificationException
         boolean isValidItem = false;
 
         for (String item : currentRoom.getItems()) {
@@ -115,12 +117,12 @@ public class Adventure {
         for (String item : itemInventory) {
 
             if (item.equals(itemName)) {
-                itemInventory.remove(item);
                 isValidItem = true;
             }
         }
 
         if (isValidItem) {
+            itemInventory.remove(itemName);
             System.out.println("You dropped " + itemName);
         } else {
             System.out.println("You can't drop " + itemName);
@@ -156,7 +158,7 @@ public class Adventure {
         if (usersNextMove[0].equals(TAKE_ITEM) && usersNextMove.length > 1) {
             addValidItem(usersNextMove[1]);
         } else if (usersNextMove[0].equals(DROP_ITEM) && usersNextMove.length > 1) {
-            dropValidItem(usersNextMove[0]);
+            dropValidItem(usersNextMove[1]);
         } else if (usersNextMove[0].equals(GO_DIRECTION) && usersNextMove.length > 1) {
             changeRooms(usersNextMove[1]);
         } else if (usersNextMove[0].equals(DISPLAY_ITEMS)) {
