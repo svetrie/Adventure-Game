@@ -48,15 +48,16 @@ public class Adventure {
     public void printItemsInRoom() {
         System.out.print("This room contains ");
 
-        if (currentRoom.getItems().size() < 1) {
+        if (currentRoom.getItems() != null && currentRoom.getItems().size() < 1) {
             System.out.print("nothing");
         } else {
 
-            for (int i = 0; i < currentRoom.getItems().size(); i++) {
+            for (int i = 0; currentRoom.getItems() != null && i < currentRoom.getItems().size(); i++) {
                 System.out.print(currentRoom.getItems().get(i));
 
+                //Makes sure there is not a trailing comma after the last item is printed
                 if (i < currentRoom.getItems().size() - 1) {
-                    System.out.print(" ,");
+                    System.out.print(", ");
                 }
             }
         }
@@ -75,24 +76,35 @@ public class Adventure {
     public void printCurrentRoom() {
         System.out.println(currentRoom.getDescription());
 
-        if(currentRoom.getName().equals(endingRoomName)) {
-            System.out.println("You've reached your destination");
-            System.out.println("Congrats on completing the game!");
-            System.exit(0);
+        if(currentRoom.getName().equals(startingRoomName)) {
+            System.out.println("Your journey begins here");
+        }
+
+        printItemsInRoom();
+        printDirectionsFromRoom();
+    }
+
+    public void printItemInventory() {
+        System.out.print("You are carrying ");
+
+        if (itemInventory.size() < 1) {
+            System.out.print("nothing");
         } else {
 
-            if(currentRoom.getName().equals(startingRoomName)) {
-                System.out.println("Your journey begins here");
-            }
+            for (int i = 0; i < itemInventory.size(); i++) {
+                System.out.print(itemInventory.get(i));
 
-            printItemsInRoom();
-            printDirectionsFromRoom();
+                //Makes sure there is not a trailing comma after the last item is printed
+                if (i < itemInventory.size() - 1) {
+                    System.out.print(", ");
+                }
+            }
         }
+
+        System.out.println();
     }
 
     public void addValidItem(String itemName) {
-        //Used a boolean flag variable rather than just removing item inside
-        //for loop if it is found to avoid a ConcurrentModificationException
         boolean isValidItem = false;
 
         for (String item : currentRoom.getItems()) {
@@ -148,6 +160,11 @@ public class Adventure {
         } else {
             System.out.print("I can't go " + directionName);
         }
+
+        // If the room has been changed into the final destination, tell user they've won the game
+        if(currentRoom.getName().equals(endingRoomName)) {
+            System.out.println("You've reached your destination. Congrats on finishing the game!");
+        }
     }
 
     public void usersNextMove(){
@@ -162,12 +179,13 @@ public class Adventure {
         } else if (usersNextMove[0].equals(GO_DIRECTION) && usersNextMove.length > 1) {
             changeRooms(usersNextMove[1]);
         } else if (usersNextMove[0].equals(DISPLAY_ITEMS)) {
-            printItemsInRoom();
+            printItemInventory();
         } else if (usersNextMove[0].equals(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
             System.exit(0);
         } else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
         }
+
     }
 
     public void playAdventureGame() {
