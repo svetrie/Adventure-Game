@@ -22,13 +22,28 @@ public class Adventure {
     private Room currentRoom;
 
     public static void main(String[] args) {
-        Adventure a = new Adventure();
-        a.loadGameWorld();
-        a.playAdventureGame();
+        Adventure adventure = new Adventure();
+
+        if (args.length > 0) {
+            adventure.createGameWorld(JsonFileLoader.parseJsonFileUsingFilePath(args[1]));
+        } else {
+            adventure.createGameWorld(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
+        }
+
+        adventure.playAdventureGame();
+    }
+
+    public void createGameWorld(GameWorld layout) {
+        gameWorld = layout;
+
+        endingRoomName = gameWorld.getEndingRoom();
+        startingRoomName = gameWorld.getStartingRoom();
+        currentRoom = gameWorld.getRoomByName(startingRoomName);
+        itemInventory = new ArrayList<String>();
     }
 
     public void loadGameWorld() {
-        System.out.println("Hello welcome to the Adventure Game!");
+        /*System.out.println("Hello welcome to the Adventure Game!");
         System.out.println("Please enter the JSON file path that contains the map you want to play from");
         System.out.println("(Press ENTER twice if you would like to use the default map)");
         String jsonFile = scan.nextLine();
@@ -37,7 +52,7 @@ public class Adventure {
             gameWorld = JsonFileLoader.parseJsonFileUsingFilePath();
         } else {
             gameWorld = JsonFileLoader.parseDefaultJsonFileUsingUrl(DEFAULT_JSON_FILE_URL);
-        }
+        }*/
 
         endingRoomName = gameWorld.getEndingRoom();
         startingRoomName = gameWorld.getStartingRoom();
@@ -142,6 +157,7 @@ public class Adventure {
     }
 
     public Direction getValidDirection(String directionName) {
+
         for (Direction direction : currentRoom.getDirections()) {
 
             if (direction.getDirectionName().toLowerCase().equals(directionName)) {
