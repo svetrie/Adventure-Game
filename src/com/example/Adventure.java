@@ -119,28 +119,28 @@ public class Adventure {
 
     public String takeValidItem(String itemName) {
 
-        if (currentRoom.getItems().contains(itemName)) {
+        if (currentRoom.getItems() != null && currentRoom.getItems().contains(itemName)) {
 
             itemInventory.add(itemName);
             currentRoom.removeItem(itemName);
 
             return "You are carrying " + itemName;
-        } else {
 
+        } else {
             return "You can't take " + itemName;
         }
     }
 
     public String dropValidItem(String itemName) {
 
-        if (itemInventory.contains(itemName)) {
+        if (itemInventory != null && itemInventory.contains(itemName)) {
 
             itemInventory.remove(itemName);
             currentRoom.addItem(itemName);
 
             return "You dropped " + itemName;
-        } else {
 
+        } else {
             return "You can't drop " + itemName;
         }
     }
@@ -183,7 +183,7 @@ public class Adventure {
             System.out.println(dropValidItem(usersNextMove[1]));
         } else if (usersNextMove[0].equals(GO_DIRECTION) && usersNextMove.length > 1) {
             if(changeRooms(usersNextMove[1]) != null) {
-                System.out.println(changeRooms(usersNextMove[0]));
+                System.out.println(changeRooms(usersNextMove[1]));
             }
         } else if (usersNextMove[0].equals(DISPLAY_ITEMS)) {
             printItemInventory();
