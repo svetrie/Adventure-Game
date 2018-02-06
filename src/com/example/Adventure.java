@@ -33,26 +33,28 @@ public class Adventure {
         adventure.playAdventureGame();
     }
 
-    public void createGameWorld(GameWorld layout) {
-        gameWorld = layout;
-
-        endingRoomName = gameWorld.getEndingRoom();
-        startingRoomName = gameWorld.getStartingRoom();
-        currentRoom = gameWorld.getRoomByName(startingRoomName);
-        itemInventory = new ArrayList<String>();
+    public GameWorld getGameWorld() {
+        return gameWorld;
     }
 
-    public void loadGameWorld() {
-        /*System.out.println("Hello welcome to the Adventure Game!");
-        System.out.println("Please enter the JSON file path that contains the map you want to play from");
-        System.out.println("(Press ENTER twice if you would like to use the default map)");
-        String jsonFile = scan.nextLine();
+    public String getStartingRoomName() {
+        return startingRoomName;
+    }
 
-        if (jsonFile.length() > 0) {
-            gameWorld = JsonFileLoader.parseJsonFileUsingFilePath();
-        } else {
-            gameWorld = JsonFileLoader.parseDefaultJsonFileUsingUrl(DEFAULT_JSON_FILE_URL);
-        }*/
+    public String getEndingRoomName() {
+        return endingRoomName;
+    }
+
+    public ArrayList<String> getItemInventory() {
+        return itemInventory;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void createGameWorld(GameWorld layout) {
+        gameWorld = layout;
 
         endingRoomName = gameWorld.getEndingRoom();
         startingRoomName = gameWorld.getStartingRoom();
@@ -150,6 +152,7 @@ public class Adventure {
 
         if (isValidItem) {
             itemInventory.remove(itemName);
+            currentRoom.addItem(itemName);
             System.out.println("You dropped " + itemName);
         } else {
             System.out.println("You can't drop " + itemName);
@@ -174,7 +177,7 @@ public class Adventure {
         if (direction != null) {
             currentRoom = gameWorld.getRoomByName(direction.getRoom());
         } else {
-            System.out.print("I can't go " + directionName);
+            System.out.println("I can't go " + directionName);
         }
 
         // If the room has been changed into the final destination, tell user they've won the game
@@ -183,10 +186,13 @@ public class Adventure {
         }
     }
 
-    public void usersNextMove(){
+    public String getUserInput() {
         System.out.println("What would you like to do?");
-        String userInput = scan.nextLine();
-        String[] usersNextMove = userInput.toLowerCase().split("\\s+");
+        return scan.nextLine();
+    }
+
+    public void usersNextMove(String userInput){
+        String[] usersNextMove = userInput.trim().toLowerCase().split("\\s+");
 
         if (usersNextMove[0].equals(TAKE_ITEM) && usersNextMove.length > 1) {
             addValidItem(usersNextMove[1]);
@@ -207,7 +213,7 @@ public class Adventure {
     public void playAdventureGame() {
         while(!currentRoom.getName().equals(endingRoomName)) {
             printCurrentRoom();
-            usersNextMove();
+            usersNextMove(getUserInput());
         }
     }
 }
