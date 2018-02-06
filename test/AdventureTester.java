@@ -25,6 +25,7 @@ public class AdventureTester {
     public void takeItemTest() {
         adventure.usersNextMove("Take coin");
         assertTrue(adventure.getCurrentRoom().getItems().size() < 1);
+        assertTrue(adventure.getItemInventory().contains("coin"));
     }
 
     @Test
@@ -37,6 +38,7 @@ public class AdventureTester {
         adventure.usersNextMove("Take coin");
         adventure.usersNextMove("Drop coin");
         assertTrue(adventure.getCurrentRoom().getItems().contains("coin"));
+        assertTrue(adventure.getItemInventory().size() < 1);
     }
 
     @Test

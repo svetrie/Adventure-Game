@@ -1,11 +1,8 @@
 import com.example.GameWorld;
 import com.example.JsonFileLoader;
-import com.example.Room;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
