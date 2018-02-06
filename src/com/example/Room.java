@@ -25,18 +25,8 @@ public class Room {
     }
 
     public void removeItem(String itemName) {
-        //Used a boolean flag variable rather than just removing item inside
-        //for loop after it is located to avoid a ConcurrentModificationException
-        boolean isValidItem = false;
 
-        for (String item : items) {
-
-            if (itemName.equalsIgnoreCase(itemName)) {
-                isValidItem = true;
-            }
-        }
-
-        if (isValidItem) {
+        if (items.contains(itemName)) {
             items.remove(itemName);
         }
     }

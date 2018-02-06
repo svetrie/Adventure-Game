@@ -20,5 +20,48 @@ public class AdventureTester {
     public void setUp() {
         adventure = new Adventure();
     }
-    
+
+    @Test
+    public void createGameWorldFromURLTest() {
+        adventure.createGameWorld(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
+        assertTrue(adventure.getStartingRoomName().equals("MatthewsStreet")
+                && adventure.getEndingRoomName().equals("Siebel1314"));
+    }
+
+    @Test
+    public void takeItemTest() {
+        adventure.usersNextMove("Take coin");
+        assertTrue(adventure.getCurrentRoom().getItems().size() == 0);
+    }
+
+    @Test
+    public void takeInvalidItem() {
+        assertEquals("You can't take phone", adventure.takeValidItem("phone"));
+    }
+
+    @Test
+    public void dropItemTest() {
+        adventure.usersNextMove("Drop coin");
+        assertTrue(adventure.getCurrentRoom().getItems().contains("coin"));
+    }
+
+    @Test
+    public void dropInvalidItemTest() {
+        assertEquals("You can't drop phone", adventure.dropValidItem("phone"));
+    }
+
+    @Test
+    public void moveInADirectionTest() {
+
+    }
+
+    @Test
+    public void moveInAInvalidDirectionTest() {
+
+    }
+
+    @Test
+    public void getItemInventory() {
+
+    }
 }

@@ -93,10 +93,6 @@ public class Adventure {
     public void printCurrentRoom() {
         System.out.println(currentRoom.getDescription());
 
-        if(currentRoom.getName().equals(startingRoomName)) {
-            System.out.println("Your journey begins here");
-        }
-
         printItemsInRoom();
         printDirectionsFromRoom();
     }
@@ -121,41 +117,31 @@ public class Adventure {
         System.out.println();
     }
 
-    public void addValidItem(String itemName) {
-        boolean isValidItem = false;
+    public String takeValidItem(String itemName) {
 
-        for (String item : currentRoom.getItems()) {
+        if (currentRoom.getItems().contains(itemName)) {
 
-            if (item.equals(itemName)) {
-                itemInventory.add(item);
-                isValidItem = true;
-            }
-        }
-
-        if (isValidItem) {
+            itemInventory.add(itemName);
             currentRoom.removeItem(itemName);
-            System.out.println("You are carrying " + itemName);
+
+            return "You are carrying " + itemName;
         } else {
-            System.out.println("You can't take " + itemName);
+
+            return "You can't take " + itemName;
         }
     }
 
-    public void dropValidItem(String itemName) {
-        boolean isValidItem = false;
+    public String dropValidItem(String itemName) {
 
-        for (String item : itemInventory) {
+        if (itemInventory.contains(itemName)) {
 
-            if (item.equals(itemName)) {
-                isValidItem = true;
-            }
-        }
-
-        if (isValidItem) {
             itemInventory.remove(itemName);
             currentRoom.addItem(itemName);
-            System.out.println("You dropped " + itemName);
+
+            return "You dropped " + itemName;
         } else {
-            System.out.println("You can't drop " + itemName);
+
+            return "You can't drop " + itemName;
         }
     }
 
@@ -171,19 +157,16 @@ public class Adventure {
         return null;
     }
 
-    public void changeRooms(String directionName) {
+    public String changeRooms(String directionName) {
        Direction direction = getValidDirection(directionName);
 
         if (direction != null) {
             currentRoom = gameWorld.getRoomByName(direction.getRoom());
+            return null;
         } else {
-            System.out.println("I can't go " + directionName);
+            return "You can't go " + directionName;
         }
 
-        // If the room has been changed into the final destination, tell user they've won the game
-        if(currentRoom.getName().equals(endingRoomName)) {
-            System.out.println("You've reached your destination. Congrats on finishing the game!");
-        }
     }
 
     public String getUserInput() {
@@ -195,11 +178,13 @@ public class Adventure {
         String[] usersNextMove = userInput.trim().toLowerCase().split("\\s+");
 
         if (usersNextMove[0].equals(TAKE_ITEM) && usersNextMove.length > 1) {
-            addValidItem(usersNextMove[1]);
+            System.out.println(takeValidItem(usersNextMove[1]));
         } else if (usersNextMove[0].equals(DROP_ITEM) && usersNextMove.length > 1) {
-            dropValidItem(usersNextMove[1]);
+            System.out.println(dropValidItem(usersNextMove[1]));
         } else if (usersNextMove[0].equals(GO_DIRECTION) && usersNextMove.length > 1) {
-            changeRooms(usersNextMove[1]);
+            if(changeRooms(usersNextMove[1]) != null) {
+                System.out.println(changeRooms(usersNextMove[0]));
+            }
         } else if (usersNextMove[0].equals(DISPLAY_ITEMS)) {
             printItemInventory();
         } else if (usersNextMove[0].equals(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
@@ -211,9 +196,13 @@ public class Adventure {
     }
 
     public void playAdventureGame() {
+        System.out.println("Your journey begins here");
+
         while(!currentRoom.getName().equals(endingRoomName)) {
             printCurrentRoom();
             usersNextMove(getUserInput());
         }
+
+        System.out.println("You've reached your destination. Congrats on finishing the game!");
     }
 }
