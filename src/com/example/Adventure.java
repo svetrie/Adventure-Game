@@ -22,12 +22,12 @@ public class Adventure {
     private Room currentRoom;
 
     public static void main(String[] args) {
-        Adventure adventure = new Adventure();
+        Adventure adventure;
 
         if (args.length > 0) {
-            adventure.createGameWorld(JsonFileLoader.parseJsonFileUsingFilePath(args[1]));
+            adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath(args[1]));
         } else {
-            adventure.createGameWorld(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
+            adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
         }
 
         adventure.playAdventureGame();
@@ -53,7 +53,7 @@ public class Adventure {
         return currentRoom;
     }
 
-    public void createGameWorld(GameWorld layout) {
+    public Adventure(GameWorld layout) {
         gameWorld = layout;
 
         endingRoomName = gameWorld.getEndingRoom();
@@ -119,7 +119,7 @@ public class Adventure {
 
     public String takeValidItem(String itemName) {
 
-        if (currentRoom.getItems() != null && currentRoom.getItems().contains(itemName)) {
+        if (currentRoom.getItems().contains(itemName)) {
 
             itemInventory.add(itemName);
             currentRoom.removeItem(itemName);
@@ -133,7 +133,7 @@ public class Adventure {
 
     public String dropValidItem(String itemName) {
 
-        if (itemInventory != null && itemInventory.contains(itemName)) {
+        if (itemInventory.contains(itemName)) {
 
             itemInventory.remove(itemName);
             currentRoom.addItem(itemName);
