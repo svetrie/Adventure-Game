@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class AdventureTester {
     }
 
     @Test
-    public void takeInvalidItem() {
+    public void takeInvalidItemTest() {
         assertEquals("You can't take phone", adventure.takeValidItem("phone"));
     }
 
@@ -48,7 +49,7 @@ public class AdventureTester {
 
     @Test
     public void moveInADirectionTest() {
-        adventure.usersNextMove("Go EAST");
+        adventure.usersNextMove("Go East");
         assertEquals("SiebelEntry", adventure.getCurrentRoom().getName());
     }
 
@@ -66,6 +67,18 @@ public class AdventureTester {
         String[] expectedItemInventory = {"key", "sweatshirt"};
 
         assertEquals(Arrays.asList(expectedItemInventory), adventure.getItemInventory());
+    }
+
+    @Test
+    public void acceptUserInputInAllCapsTest() {
+        adventure.usersNextMove("GO EAST");
+        assertEquals("SiebelEntry", adventure.getCurrentRoom().getName());
+    }
+
+    @Test
+    public void acceptUserInputWithLargeSpaces() {
+        adventure.usersNextMove("   Go  East  ");
+        assertEquals("SiebelEntry", adventure.getCurrentRoom().getName());
     }
 
 }
