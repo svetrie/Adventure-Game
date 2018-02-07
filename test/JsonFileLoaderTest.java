@@ -25,4 +25,14 @@ public class JsonFileLoaderTest {
         assertEquals("IlliniUnionBookstore", gameWorld.getStartingRoom());
         assertEquals("Foellinger", gameWorld.getEndingRoom());
     }
+
+    @Test
+    public void parseJsonFileUsingInvalidURLTest() {
+        assertEquals(null, JsonFileLoader.parseJsonFileUsingUrl("askljaskcom"));
+    }
+
+    @Test
+    public void parseJsonFileUsingInvalidFilePathTest() {
+        assertEquals(null, JsonFileLoader.parseJsonFileUsingFilePath("cs126IsAwesome.json"));
+    }
 }

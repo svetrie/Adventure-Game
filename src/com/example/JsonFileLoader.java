@@ -61,10 +61,9 @@ public class JsonFileLoader {
             gameWorld = gson.fromJson(jsonString, GameWorld.class);
         } catch (IOException e) {
             System.out.println("Couldn't find file: " + filename);
-            System.exit(-1);
         }
 
         return gameWorld;
     }
-    
+
 }
