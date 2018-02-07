@@ -8,6 +8,7 @@ public class Adventure {
     private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
     private static final Scanner scan = new Scanner(System.in);
 
+    //Represents possible actions user can take
     private static final String TAKE_ITEM = "take";
     private static final String DROP_ITEM = "drop";
     private static final String GO_DIRECTION = "go";
@@ -25,16 +26,12 @@ public class Adventure {
         Adventure adventure;
 
         if (args.length > 0) {
-            adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath("AlternateAdventure.json"));
+            adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath(args[0]));
         } else {
             adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
         }
 
         adventure.playAdventureGame();
-    }
-
-    public GameWorld getGameWorld() {
-        return gameWorld;
     }
 
     public String getStartingRoomName() {
@@ -65,7 +62,7 @@ public class Adventure {
     public void printItemsInRoom() {
         System.out.print("This room contains ");
 
-        if (currentRoom.getItems() != null && currentRoom.getItems().size() < 1) {
+        if (currentRoom.getItems().size() < 1) {
             System.out.print("nothing");
         } else {
 
@@ -117,9 +114,17 @@ public class Adventure {
         System.out.println();
     }
 
+    /**
+     * Removes item from current room and adds it to user's inventory if item exists
+     * @param userInput userInput is the user's input split into words
+     * @return String message that tells user whether item was successfully taken
+     */
     public String takeValidItem(String[] userInput) {
-       String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
-       String itemName = String.join(" ", itemNameAsArray);
+
+        /* Disregards first word of userInput since it is an action. Isolates item name by
+           copying the rest of userInput into a subarray and joining the contents of the subarray */
+        String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
+        String itemName = String.join(" ", itemNameAsArray);
 
         if (currentRoom.getItems().contains(itemName)) {
 
@@ -133,7 +138,16 @@ public class Adventure {
         }
     }
 
+    /**
+     * Removes item from the user's inventory and adds it to the current room
+     * user is in if the item exists
+     * @param userInput is the user's input split into words
+     * @return String message that tells user whether item was successfully dropped
+     */
     public String dropValidItem(String[] userInput) {
+
+        /* Disregards first word of userInput since it is an action. Isolates item name by
+        copying the rest of userInput into a subarray and joining the contents of the subarray */
         String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
         String itemName = String.join(" ", itemNameAsArray);
 
@@ -149,6 +163,13 @@ public class Adventure {
         }
     }
 
+    /**
+     * Checks if the direction user entered is a valid direction to move toward from the
+     * current room's location
+     * @param directionName is the direction user wants to move in
+     * @return Direction object of current room whose name matches directionName or null if
+     * no such Direction object exits
+     */
     public Direction getValidDirection(String directionName) {
 
         for (Direction direction : currentRoom.getDirections()) {
@@ -161,34 +182,51 @@ public class Adventure {
         return null;
     }
 
+    /**
+     * Changes room if user entered a valid direction
+     * @param directionName is the direction user wants to move toward
+     * @return String message that tells user whether or not they can move in that direction
+     */
     public String changeRooms(String directionName) {
        Direction direction = getValidDirection(directionName);
 
         if (direction != null) {
             currentRoom = gameWorld.getRoomByName(direction.getRoom());
-            return null;
+            return "";
         } else {
             return "You can't go " + directionName;
         }
 
     }
 
+    /**
+     * Gets user's input using Scanner
+     * @return user's input
+     */
     public String getUserInput() {
         System.out.println("What would you like to do?");
         return scan.nextLine();
     }
 
+    /**
+     * Validates user's input and performs an action based on input using helper methods
+     * @param userInput is the user's input
+     */
     public void usersNextMove(String userInput){
+
+        /* Splits userInput into words to identify the user's action(go, take, etc.)
+           from the object(item or direction) the action is performed on */
         String[] usersNextMove = userInput.trim().split("\\s+");
 
+        /* Each conditional checks for an action user could take (first word of userInput)
+           and checks that the object of the action (remaining words of userInput) exists
+           using a helper method. Helper method will also execute action if the object is valid */
         if (usersNextMove[0].equalsIgnoreCase(TAKE_ITEM) && usersNextMove.length > 1) {
             System.out.println(takeValidItem(usersNextMove));
         } else if (usersNextMove[0].equalsIgnoreCase(DROP_ITEM) && usersNextMove.length > 1) {
             System.out.println(dropValidItem(usersNextMove));
         } else if (usersNextMove[0].equalsIgnoreCase(GO_DIRECTION) && usersNextMove.length > 1) {
-            if(changeRooms(usersNextMove[1]) != null) {
-                System.out.println(changeRooms(usersNextMove[1]));
-            }
+            System.out.println(changeRooms(usersNextMove[1]));
         } else if (usersNextMove[0].equalsIgnoreCase(DISPLAY_ITEMS)) {
             printItemInventory();
         } else if (usersNextMove[0].equalsIgnoreCase(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
@@ -199,6 +237,9 @@ public class Adventure {
 
     }
 
+    /**
+     * Uses helper methods to run an Adventure game
+     */
     public void playAdventureGame() {
         System.out.println("Your journey begins here");
 

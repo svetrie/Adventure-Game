@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Room {
     private String name;
     private String description;
-    private ArrayList<String> items;
+    private ArrayList<String> items = new ArrayList<String>();
     private Direction[] directions;
 
     public String getName() {

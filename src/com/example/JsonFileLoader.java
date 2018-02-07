@@ -16,6 +16,11 @@ import java.nio.file.Path;
 
 public class JsonFileLoader {
 
+    /**
+     * Accesses JSON file using URL and parses it using gson.
+     * @param url is the URL that contains the JSON file
+     * @return GameWorld object that represents the layout found in the JSON file
+     */
     public static GameWorld parseJsonFileUsingUrl(String url) {
 
         final HttpResponse<String> stringHttpResponse;
@@ -40,6 +45,11 @@ public class JsonFileLoader {
         return gameWorld;
     }
 
+    /**
+     * Accesses JSON file using URL and parses it using gson.
+     * @param filename is the name of the JSON file
+     * @return GameWorld object that represents the layout found in the JSON file
+     */
     public static GameWorld parseJsonFileUsingFilePath(String filename) {
         GameWorld gameWorld = null;
         Gson gson = new Gson();
@@ -56,12 +66,5 @@ public class JsonFileLoader {
 
         return gameWorld;
     }
-
-    public static void main(String args[]) {
-        GameWorld g = parseJsonFileUsingUrl("HI");
-        Room[] r = g.getRooms();
-        for(String item: r[1].getItems()) {
-            System.out.println(item);
-        }
-    }
+    
 }
