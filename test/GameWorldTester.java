@@ -41,4 +41,5 @@ public class GameWorldTester {
         assertEquals("You are in the ACM office.  There are lots of friendly ACM people.",
                 gameWorld.getRoomByName("AcmOffice").getDescription());
     }
+
 }

@@ -16,7 +16,7 @@ public class Adventure {
     private static final String EXIT_GAME = "exit";
     private static final String DISPLAY_ITEMS = "list";
 
-    private GameWorld gameWorld;
+    public GameWorld gameWorld;
     private String startingRoomName;
     private String endingRoomName;
     private ArrayList<String> itemInventory;
@@ -31,15 +31,9 @@ public class Adventure {
             adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
         }
 
+        adventure.gameWorld.isValidMap("MatthewsStreet", "Siebel1314");
+
         adventure.playAdventureGame();
-    }
-
-    public String getStartingRoomName() {
-        return startingRoomName;
-    }
-
-    public String getEndingRoomName() {
-        return endingRoomName;
     }
 
     public ArrayList<String> getItemInventory() {
@@ -62,11 +56,11 @@ public class Adventure {
     public void printItemsInRoom() {
         System.out.print("This room contains ");
 
-        if (currentRoom.getItems().size() < 1) {
+        if (currentRoom.getItems() == null || currentRoom.getItems().size() < 1) {
             System.out.print("nothing");
         } else {
 
-            for (int i = 0; currentRoom.getItems() != null && i < currentRoom.getItems().size(); i++) {
+            for (int i = 0; i < currentRoom.getItems().size(); i++) {
                 System.out.print(currentRoom.getItems().get(i));
 
                 //Makes sure there is not a trailing comma after the last item is printed
@@ -196,7 +190,6 @@ public class Adventure {
         } else {
             return "You can't go " + directionName;
         }
-
     }
 
     /**

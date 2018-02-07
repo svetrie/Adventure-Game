@@ -27,4 +27,21 @@ public class GameWorld {
 
         return null;
     }
+
+    public void isValidMap(String currentRoomName, String endingRoomName) {
+
+        Room currentRoom = getRoomByName(currentRoomName);
+        currentRoom.setVisited(true);
+
+        if (currentRoomName.equals(endingRoomName)) {
+            System.out.println("The layout is valid. A path exists between these two rooms");
+        }
+
+        for (Direction direction : currentRoom.getDirections()) {
+
+            if (!getRoomByName(direction.getRoom()).getVisited()) {
+                isValidMap(direction.getRoom(), endingRoomName);
+            }
+        }
+    }
 }
