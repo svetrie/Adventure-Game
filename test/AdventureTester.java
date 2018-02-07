@@ -1,19 +1,15 @@
 import com.example.Adventure;
 import com.example.GameWorld;
 import com.example.JsonFileLoader;
-import com.google.gson.Gson;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 
-import java.util.ArrayList;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
 public class AdventureTester {
-
     private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
     private static Adventure adventure;
 
@@ -31,7 +27,7 @@ public class AdventureTester {
 
     @Test
     public void takeInvalidItemTest() {
-        assertEquals("You can't take phone", adventure.takeValidItem("phone"));
+        assertEquals("You can't take phone", adventure.takeValidItem(new String[] {"take", "phone"}));
     }
 
     @Test
@@ -44,7 +40,7 @@ public class AdventureTester {
 
     @Test
     public void dropInvalidItemTest() {
-        assertEquals("You can't drop phone", adventure.dropValidItem("phone"));
+        assertEquals("You can't drop phone", adventure.dropValidItem(new String[] {"take", "phone"}));
     }
 
     @Test

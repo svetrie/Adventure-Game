@@ -1,10 +1,10 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Adventure {
-
     private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
     private static final Scanner scan = new Scanner(System.in);
 
@@ -25,7 +25,7 @@ public class Adventure {
         Adventure adventure;
 
         if (args.length > 0) {
-            adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath(args[1]));
+            adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath("AlternateAdventure.json"));
         } else {
             adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
         }
@@ -117,7 +117,9 @@ public class Adventure {
         System.out.println();
     }
 
-    public String takeValidItem(String itemName) {
+    public String takeValidItem(String[] userInput) {
+       String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
+       String itemName = String.join(" ", itemNameAsArray);
 
         if (currentRoom.getItems().contains(itemName)) {
 
@@ -131,7 +133,9 @@ public class Adventure {
         }
     }
 
-    public String dropValidItem(String itemName) {
+    public String dropValidItem(String[] userInput) {
+        String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
+        String itemName = String.join(" ", itemNameAsArray);
 
         if (itemInventory.contains(itemName)) {
 
@@ -149,7 +153,7 @@ public class Adventure {
 
         for (Direction direction : currentRoom.getDirections()) {
 
-            if (direction.getDirectionName().toLowerCase().equals(directionName)) {
+            if (direction.getDirectionName().equalsIgnoreCase(directionName)) {
                 return direction;
             }
         }
@@ -175,19 +179,19 @@ public class Adventure {
     }
 
     public void usersNextMove(String userInput){
-        String[] usersNextMove = userInput.trim().toLowerCase().split("\\s+");
+        String[] usersNextMove = userInput.trim().split("\\s+");
 
-        if (usersNextMove[0].equals(TAKE_ITEM) && usersNextMove.length > 1) {
-            System.out.println(takeValidItem(usersNextMove[1]));
-        } else if (usersNextMove[0].equals(DROP_ITEM) && usersNextMove.length > 1) {
-            System.out.println(dropValidItem(usersNextMove[1]));
-        } else if (usersNextMove[0].equals(GO_DIRECTION) && usersNextMove.length > 1) {
+        if (usersNextMove[0].equalsIgnoreCase(TAKE_ITEM) && usersNextMove.length > 1) {
+            System.out.println(takeValidItem(usersNextMove));
+        } else if (usersNextMove[0].equalsIgnoreCase(DROP_ITEM) && usersNextMove.length > 1) {
+            System.out.println(dropValidItem(usersNextMove));
+        } else if (usersNextMove[0].equalsIgnoreCase(GO_DIRECTION) && usersNextMove.length > 1) {
             if(changeRooms(usersNextMove[1]) != null) {
                 System.out.println(changeRooms(usersNextMove[1]));
             }
-        } else if (usersNextMove[0].equals(DISPLAY_ITEMS)) {
+        } else if (usersNextMove[0].equalsIgnoreCase(DISPLAY_ITEMS)) {
             printItemInventory();
-        } else if (usersNextMove[0].equals(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
+        } else if (usersNextMove[0].equalsIgnoreCase(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
             System.exit(0);
         } else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
@@ -203,6 +207,7 @@ public class Adventure {
             usersNextMove(getUserInput());
         }
 
+        printCurrentRoom();
         System.out.println("You've reached your destination. Congrats on finishing the game!");
     }
 }

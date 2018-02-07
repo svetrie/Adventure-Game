@@ -1,0 +1,140 @@
+{
+  "startingRoom": "IlliniUnionBookstore",
+  "endingRoom": "Foellinger",
+  "rooms": [
+    {
+      "name": "IlliniUnionBookstore",
+      "description": "You are in the Illini Union Bookstore. There are a lot of poor college students trying to buy expensive textbooks",
+      "items": ["textbook"],
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "HenryAdministrationBuilding"
+        }
+      ]
+    },
+    {
+      "name": "HenryAdministrationBuilding",
+      "description": "You are in the Henry Administration Building. You see calculus students solving complex trig integrals in their discussion sections",
+      "items": ["pencil", "eraser"],
+      "directions": [
+        {
+          "directionName": "Northeast",
+          "room": "IlliniUnion"
+        },
+        {
+          "directionName": "East",
+          "room": "NoyesLaboratory"
+        },
+        {
+          "directionName": "West",
+          "room": "IlliniUnionBookstore"
+        }
+      ]
+    },
+    {
+      "name": "IlliniUnion",
+      "description": "You are in the Illini Union. The smell of coffee drifts toward you from Starbucks",
+      "items": ["caramel mocha", "vanilla latte"],
+      "directions": [
+        {
+          "directionName": "West",
+          "room": "Altgeld"
+        },
+        {
+          "directionName": "Southeast",
+          "room": "NoyesLaboratory"
+        },
+        {
+          "directionName": "Southwest",
+          "room": "HenryAdministrationBuilding"
+        }
+      ]
+    },
+    {
+      "name": "Altgeld",
+      "description": "You are in Altgeld. You can see the post office.",
+      "items": [],
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "IlliniUnion"
+        }
+      ]
+    },
+    {
+      "name": "NoyesLaboratory",
+      "description": "You are in NoyesLaboratory. A mob of students exit Noyes 100 as their lecture ends",
+      "items": ["lab coat"],
+      "directions": [
+        {
+          "directionName": "Northwest",
+          "room": "IlliniUnion"
+        },
+        {
+          "directionName": "West",
+          "room": "HenryAdministrationBuilding"
+        },
+        {
+          "directionName": "South",
+          "room": "DavenportHall"
+        }
+      ]
+    },
+    {
+      "name": "DavenportHall",
+      "description": "You are in Davenport Hall. You admire the wooden, rustic interior of the building",
+      "items": ["penny", "$20 Amazon giftcard", "someone's wallet"],
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "NoyesLaboratory"
+        },
+        {
+          "directionName": "West",
+          "room": "EnglishBuilding"
+        },
+        {
+          "directionName": "South",
+          "room": "ForeignLanguagesBuilding"
+        }
+      ]
+    },
+    {
+      "name": "EnglishBuilding",
+      "description": "You are in the English Building. You see English majors sitting downstairs, proofreading their essays",
+      "directions": [
+        {
+          "directionName": "East",
+          "room": "DavenportHall"
+        }
+      ]
+    },
+    {
+      "name": "ForeignLanguagesBuilding",
+      "description": "You are in Foreign Languages Building. You hear students speaking languages from regions all across the globe",
+      "items": ["water bottle", "headphones"],
+      "directions": [
+        {
+          "directionName": "North",
+          "room": "DavenportHall"
+        },
+        {
+          "directionName": "Southwest",
+          "room": "Foellinger"
+        }
+      ]
+    },
+    {
+      "name": "Foellinger",
+      "description": "You are in Foellinger. You are amazed by the size and elegance of Foellinger's auditorium",
+      "items": [],
+      "directions": [
+        {
+          "directionName": "Northeast",
+          "room": "ForeignLanguagesBuilding"
+        }
+      ]
+    }
+  ]
+}
