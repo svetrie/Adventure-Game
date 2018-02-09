@@ -5,7 +5,12 @@
     {
       "name": "IlliniUnionBookstore",
       "description": "You are in the Illini Union Bookstore. There are a lot of poor college students trying to buy expensive textbooks",
-      "items": ["textbook"],
+      "items": [
+        {
+          "name": "textbook",
+          "damage": 1.5
+        }
+      ],
       "directions": [
         {
           "directionName": "East",
@@ -15,8 +20,17 @@
     },
     {
       "name": "HenryAdministrationBuilding",
-      "description": "You are in the Henry Administration Building. You see calculus students solving complex trig integrals in their discussion sections",
-      "items": ["pencil", "calculator"],
+      "description": "You are in the Henry Administration Building. You see calculus students solving complex trig integrals in their discussion sections.",
+      "items": [
+        {
+          "name": "pencil",
+          "damage": 1.0
+        },
+        {
+          "name": "calculator",
+          "damage": 2.5
+        }
+      ],
       "directions": [
         {
           "directionName": "Northeast",
@@ -30,12 +44,22 @@
           "directionName": "West",
           "room": "IlliniUnionBookstore"
         }
-      ]
+      ],
+      "monstersInRoom": ["Justin Bieber"]
     },
     {
       "name": "IlliniUnion",
       "description": "You are in the Illini Union. The smell of coffee drifts toward you from Starbucks",
-      "items": ["caramel mocha", "vanilla latte"],
+      "items": [
+        {
+          "name": "caramel mocha",
+          "damage": 3.0
+        },
+        {
+          "name": "vanilla latte",
+          "damage": 4.0
+        }
+      ],
       "directions": [
         {
           "directionName": "West",
@@ -49,7 +73,8 @@
           "directionName": "Southwest",
           "room": "HenryAdministrationBuilding"
         }
-      ]
+      ],
+      "monstersInRoom": ["Taylor Swift"]
     },
     {
       "name": "Altgeld",
@@ -60,12 +85,26 @@
           "directionName": "East",
           "room": "IlliniUnion"
         }
-      ]
+      ],
+      "monstersInRoom": ["Lindsay Lohan"]
     },
     {
       "name": "NoyesLaboratory",
       "description": "You are in NoyesLaboratory. A mob of students exit Noyes 100 as their lecture ends",
-      "items": ["lab coat", "beaker", "boxing gloves"],
+      "items": [
+        {
+          "name": "lab coat",
+          "damage": 5.0
+        },
+        {
+          "name": "beaker",
+          "damage": 5.0
+        },
+        {
+          "name": "boxing gloves",
+          "damage": 7.5
+        }
+      ],
       "directions": [
         {
           "directionName": "Northwest",
@@ -79,12 +118,22 @@
           "directionName": "South",
           "room": "DavenportHall"
         }
-      ]
+      ],
+      "monstersInRoom": ["Connor McGregor", "Floyd Mayweather"]
     },
     {
       "name": "DavenportHall",
       "description": "You are in Davenport Hall. You admire the wooden, rustic interior of the building",
-      "items": ["basketball", "cupcake"],
+      "items": [
+        {
+          "name": "basketball",
+          "damage": 10.0
+        },
+        {
+          "name": "cupcake",
+          "damage": 10.0
+        }
+      ],
       "directions": [
         {
           "directionName": "North",
@@ -98,23 +147,35 @@
           "directionName": "South",
           "room": "ForeignLanguagesBuilding"
         }
-      ]
+      ],
+      "monstersInRoom": ["Kevin Durant"]
     },
     {
       "name": "EnglishBuilding",
       "description": "You are in the English Building. You see English majors sitting downstairs, proofreading their essays",
-      "items": ["lip kit"],
+      "item": [
+        {
+          "name": "lip kit",
+          "damage": 12.5
+        }
+      ],
       "directions": [
         {
           "directionName": "East",
           "room": "DavenportHall"
         }
-      ]
+      ],
+      "monstersInRoom": ["Kylie Jenner"]
     },
     {
       "name": "ForeignLanguagesBuilding",
       "description": "You are in Foreign Languages Building. You hear students speaking languages from regions all across the globe",
-      "items": ["Yeezys"],
+      "items": [
+        {
+          "name": "Yeezys",
+          "damage": 15.0
+        }
+      ],
       "directions": [
         {
           "directionName": "North",
@@ -124,7 +185,8 @@
           "directionName": "Southwest",
           "room": "Foellinger"
         }
-      ]
+      ],
+      "monstersInRoom": ["Kim Kardashian", "Kanye West"]
     },
     {
       "name": "Foellinger",
@@ -142,9 +204,9 @@
   {
     "name": "Tony",
     "items": [],
-    "attack": 50.0,
-    "defense": 50.0,
-    "health": 50.0,
+    "attack": 10.0,
+    "defense": 10.0,
+    "health": 75.0,
     "level": 1
   },
   "monsters": [
