@@ -3,8 +3,6 @@ import com.example.GameWorld;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class JsonFileLoaderTest {
@@ -21,7 +19,7 @@ public class JsonFileLoaderTest {
 
     @Test
     public void parseJsonFileUsingFilePath() {
-        gameWorld = JsonFileLoader.parseJsonFileUsingFilePath("AlternateAdventure.json");
+        gameWorld = JsonFileLoader.parseJsonFileUsingFilePath("com/example/AlternateAdventure.json");
         assertEquals("IlliniUnionBookstore", gameWorld.getStartingRoom());
         assertEquals("Foellinger", gameWorld.getEndingRoom());
     }

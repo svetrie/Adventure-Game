@@ -39,6 +39,24 @@ public class Room {
         return directions;
     }
 
+    /**
+     * Checks if the direction user entered is a valid direction to move toward from this room
+     * @param directionName is the direction user entered in
+     * @return Direction object of this room whose name matches directionName or null if
+     * no such Direction object exits
+     */
+    public Direction getValidDirection(String directionName) {
+
+        for (Direction direction : directions) {
+
+            if (direction.getDirectionName().equalsIgnoreCase(directionName)) {
+                return direction;
+            }
+        }
+
+        return null;
+    }
+
     public boolean getVisited() {
         return visited;
     }
@@ -46,4 +64,40 @@ public class Room {
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
+
+    public void printItemsInRoom() {
+        System.out.print("This room contains ");
+
+        if (items == null || items.size() < 1) {
+            System.out.print("nothing");
+        } else {
+
+            for (int i = 0; i < items.size(); i++) {
+                System.out.print(items.get(i));
+
+                //Makes sure there is not a trailing comma after the last item is printed
+                if (i < items.size() - 1) {
+                    System.out.print(", ");
+                }
+            }
+        }
+
+        System.out.println();
+    }
+
+    public void printDirectionsFromRoom() {
+        System.out.println("From here you can go: ");
+
+        for (Direction direction : directions) {
+            System.out.println("\t" + direction.getDirectionName() + " to " + direction.getRoom());
+        }
+    }
+
+    public void printCurrentRoom() {
+        System.out.println(description);
+
+        printItemsInRoom();
+        printDirectionsFromRoom();
+    }
+
 }

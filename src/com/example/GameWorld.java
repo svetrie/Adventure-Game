@@ -1,9 +1,13 @@
 package com.example;
 
+import java.util.HashMap;
+
 public class GameWorld {
     private String startingRoom;
     private String endingRoom;
+    // Create a hashmap for linking rooms to their names
     private Room[] rooms;
+
 
     public String getStartingRoom() {
         return startingRoom;

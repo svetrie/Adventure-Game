@@ -16,7 +16,7 @@ public class Adventure {
     private static final String EXIT_GAME = "exit";
     private static final String DISPLAY_ITEMS = "list";
 
-    public GameWorld gameWorld;
+    private GameWorld gameWorld;
     private String startingRoomName;
     private String endingRoomName;
     private ArrayList<String> itemInventory;
@@ -26,22 +26,16 @@ public class Adventure {
         Adventure adventure;
 
         if (args.length > 0) {
+            System.out.println("Using " + args[0]);
             adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath(args[0]));
         } else {
             adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
         }
 
-        adventure.gameWorld.isValidMap("MatthewsStreet", "Siebel1314");
+        adventure.getGameWorld().isValidMap(adventure.getStartingRoomName(), adventure.getEndingRoomName());
+        System.out.println();
 
         adventure.playAdventureGame();
-    }
-
-    public ArrayList<String> getItemInventory() {
-        return itemInventory;
-    }
-
-    public Room getCurrentRoom() {
-        return currentRoom;
     }
 
     public Adventure(GameWorld layout) {
@@ -53,39 +47,24 @@ public class Adventure {
         itemInventory = new ArrayList<String>();
     }
 
-    public void printItemsInRoom() {
-        System.out.print("This room contains ");
-
-        if (currentRoom.getItems() == null || currentRoom.getItems().size() < 1) {
-            System.out.print("nothing");
-        } else {
-
-            for (int i = 0; i < currentRoom.getItems().size(); i++) {
-                System.out.print(currentRoom.getItems().get(i));
-
-                //Makes sure there is not a trailing comma after the last item is printed
-                if (i < currentRoom.getItems().size() - 1) {
-                    System.out.print(", ");
-                }
-            }
-        }
-
-        System.out.println();
+    public GameWorld getGameWorld() {
+        return gameWorld;
     }
 
-    public void printDirectionsFromRoom() {
-        System.out.println("From here you can go: ");
-
-        for (Direction direction : currentRoom.getDirections()) {
-            System.out.println("\t" + direction.getDirectionName() + " to " + direction.getRoom());
-        }
+    public ArrayList<String> getItemInventory() {
+        return itemInventory;
     }
 
-    public void printCurrentRoom() {
-        System.out.println(currentRoom.getDescription());
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
 
-        printItemsInRoom();
-        printDirectionsFromRoom();
+    public String getStartingRoomName() {
+        return startingRoomName;
+    }
+
+    public String getEndingRoomName() {
+        return endingRoomName;
     }
 
     public void printItemInventory() {
@@ -126,7 +105,6 @@ public class Adventure {
             currentRoom.removeItem(itemName);
 
             return "You are carrying " + itemName;
-
         } else {
             return "You can't take " + itemName;
         }
@@ -151,29 +129,9 @@ public class Adventure {
             currentRoom.addItem(itemName);
 
             return "You dropped " + itemName;
-
         } else {
             return "You can't drop " + itemName;
         }
-    }
-
-    /**
-     * Checks if the direction user entered is a valid direction to move toward from the
-     * current room's location
-     * @param directionName is the direction user wants to move in
-     * @return Direction object of current room whose name matches directionName or null if
-     * no such Direction object exits
-     */
-    public Direction getValidDirection(String directionName) {
-
-        for (Direction direction : currentRoom.getDirections()) {
-
-            if (direction.getDirectionName().equalsIgnoreCase(directionName)) {
-                return direction;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -182,7 +140,7 @@ public class Adventure {
      * @return String message that tells user whether or not they can move in that direction
      */
     public String changeRooms(String directionName) {
-       Direction direction = getValidDirection(directionName);
+       Direction direction = currentRoom.getValidDirection(directionName);
 
         if (direction != null) {
             currentRoom = gameWorld.getRoomByName(direction.getRoom());
@@ -237,11 +195,11 @@ public class Adventure {
         System.out.println("Your journey begins here");
 
         while(!currentRoom.getName().equals(endingRoomName)) {
-            printCurrentRoom();
+            currentRoom.printCurrentRoom();
             usersNextMove(getUserInput());
         }
 
-        printCurrentRoom();
+        currentRoom.printCurrentRoom();
         System.out.println("You've reached your destination. Congrats on finishing the game!");
     }
 }

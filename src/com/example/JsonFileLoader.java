@@ -22,7 +22,6 @@ public class JsonFileLoader {
      * @return GameWorld object that represents the layout found in the JSON file
      */
     public static GameWorld parseJsonFileUsingUrl(String url) {
-
         final HttpResponse<String> stringHttpResponse;
         GameWorld gameWorld = null;
         Gson gson = new Gson();
@@ -54,7 +53,7 @@ public class JsonFileLoader {
         GameWorld gameWorld = null;
         Gson gson = new Gson();
 
-        final Path path = FileSystems.getDefault().getPath("test", filename);
+        final Path path = FileSystems.getDefault().getPath("src/com/example/" + filename);
 
         try {
             String jsonString = new String(Files.readAllBytes(path));
