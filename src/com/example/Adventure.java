@@ -175,7 +175,10 @@ public class Adventure {
             gameWorld.getPlayer().printItemInventory();
         } else if (usersNextMove[0].equalsIgnoreCase(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
             System.exit(0);
-        } else {
+        } else if (usersNextMove.length > 1 && (usersNextMove[0] + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
+            player.printPlayerInfo();
+        }
+        else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
         }
 

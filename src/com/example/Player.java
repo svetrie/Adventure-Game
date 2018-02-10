@@ -67,6 +67,11 @@ public class Player {
         itemInventory.remove(item);
     }
 
+    public void printPlayerInfo() {
+        System.out.println("Level: " + level + ", Attack: " + attack + ", Defense: "
+                + defense + ", Health: " + currentHealth + "/" + maxHealth);
+    }
+
     public void printItemInventory() {
         System.out.print("You are carrying ");
 
@@ -89,7 +94,7 @@ public class Player {
 
     public void gainExperience(Monster monster) {
          totalExp += ((monster.getAttack() + monster.getDefense())/2
-                + monster.getHealth()) * DUEL_EXP_MULTIPLIER;
+                + monster.getMaxHealth()) * DUEL_EXP_MULTIPLIER;
 
         if (level == 1 && totalExp >= LEVEL1_EXP) {
             levelUp();

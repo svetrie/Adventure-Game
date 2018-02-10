@@ -4,7 +4,8 @@ public class Monster {
     private String name;
     private double attack;
     private double defense;
-    private double health;
+    private double maxHealth;
+    private double currentHealth;
 
     public String getName() {
         return name;
@@ -18,7 +19,11 @@ public class Monster {
         return defense;
     }
 
-    public double getHealth() {
-        return health;
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
+    public double getCurrentHealth() {
+        return currentHealth;
     }
 }
