@@ -3,12 +3,26 @@ package com.example;
 import java.util.ArrayList;
 
 public class Player {
+    private static final int DUEL_EXP_MULTIPLIER = 20;
+    private static final double NEXT_LEVEL_EXPERIENCE_MULTIPLIER = 1.1;
+    private static final double LEVEL1_EXP = 25;
+    private static final double LEVEL2_EXP = 50;
+    private static final int LEVEL2_CUTOFF = 2;
+    private static final double ATTACK_MULTIPLIER = 1.5;
+    private static final double DEFENSE_MULTIPLIER = 1.5;
+    private static final double HEALTH_MULTIPLIER = 1.3;
+
     private String name;
     private ArrayList<Item> itemInventory = new ArrayList<Item>();
     private double attack;
     private double defense;
-    private double health;
+    private double maxHealth;
+    private double currentHealth;
+
     private int level;
+    private double totalExp;
+    private double expForNextLevel;
+    private double lastLevelExp;
 
     public String getName() {
         return name;
@@ -26,8 +40,8 @@ public class Player {
         return defense;
     }
 
-    public double getHealth() {
-        return health;
+    public double getCurrentHealth() {
+        return currentHealth;
     }
 
     public int getLevel() {
@@ -71,6 +85,40 @@ public class Player {
         }
 
         System.out.println();
+    }
+
+    public void gainExperience(Monster monster) {
+         totalExp += ((monster.getAttack() + monster.getDefense())/2
+                + monster.getHealth()) * DUEL_EXP_MULTIPLIER;
+
+        if (level == 1 && totalExp >= LEVEL1_EXP) {
+            levelUp();
+
+            expForNextLevel = LEVEL2_EXP;
+            lastLevelExp = LEVEL1_EXP;
+            //Should currentExp reset back to 0?
+            //currentExp = LEVEL1_EXP - currentExp;
+        } else if (level >= 2 && totalExp >= expForNextLevel) {
+            levelUp();
+        }
+    }
+
+    public void levelUp() {
+        level ++;
+
+        if (level > LEVEL2_CUTOFF) {
+            double tempExp = expForNextLevel;
+
+            expForNextLevel = (expForNextLevel + lastLevelExp) * NEXT_LEVEL_EXPERIENCE_MULTIPLIER;
+
+            lastLevelExp = tempExp;
+        }
+
+        attack *= ATTACK_MULTIPLIER;
+        defense *= DEFENSE_MULTIPLIER;
+        maxHealth *= HEALTH_MULTIPLIER;
+
+        currentHealth = maxHealth;
     }
 
 }

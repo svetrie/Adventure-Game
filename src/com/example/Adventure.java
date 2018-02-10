@@ -15,6 +15,14 @@ public class Adventure {
     private static final String QUIT_GAME = "quit";
     private static final String EXIT_GAME = "exit";
     private static final String DISPLAY_ITEMS = "list";
+    private static final String PLAYER_INFO = "playerinfo";
+    private static final String DUEL_MONSTER = "duel";
+
+    //Represents possible actions user can take during a duel
+    private static final String ATTACK = "attack";
+    private static final String ATTACK_WITH_ITEM = "attackwith";
+    private static final String DISENGAGE = "disengage";
+    private static final String STATUS = "status";
 
     private GameWorld gameWorld;
     private Player player;

@@ -125,11 +125,36 @@ public class Room {
         }
     }
 
+    public void printMonstersInRoom() {
+
+        if (monstersInRoom == null || monstersInRoom.length < 1) {
+            System.out.print("There are no monsters in this room");
+        } else {
+
+            System.out.print("You must battle ");
+
+            for (int i = 0; i < monstersInRoom.length; i++) {
+                System.out.print(monstersInRoom[i]);
+
+                //Makes sure there is not a trailing comma after the last item is printed
+                if (i < monstersInRoom.length - 1) {
+                    System.out.print(", ");
+                }
+            }
+
+            System.out.print(" to escape!");
+        }
+
+        System.out.println();
+    }
+
     public void printCurrentRoom() {
         System.out.println(description);
 
         printItemsInRoom();
+       //Print directions only after player defeats monsters
         printDirectionsFromRoom();
+        printMonstersInRoom();
     }
 
 }

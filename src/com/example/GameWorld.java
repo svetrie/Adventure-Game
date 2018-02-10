@@ -42,6 +42,17 @@ public class GameWorld {
         return monsters;
     }
 
+    public Monster getMonsterByName(String monsterName) {
+        for (Monster monster : monsters) {
+
+            if (monster.getName().equalsIgnoreCase(monsterName)) {
+                return monster;
+            }
+        }
+
+        return null;
+    }
+
     public void isValidMap(String currentRoomName, String endingRoomName) {
 
         Room currentRoom = getRoomByName(currentRoomName);
