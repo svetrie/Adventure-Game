@@ -22,7 +22,7 @@ public class AdventureTester {
     public void takeItemTest() {
         adventure.usersNextMove("Take coin");
         assertTrue(adventure.getCurrentRoom().getItems().size() < 1);
-        assertTrue(adventure.getItemInventory().contains("coin"));
+        assertTrue(adventure.getPlayer().getItemInventory().contains("coin"));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class AdventureTester {
         adventure.usersNextMove("Take coin");
         adventure.usersNextMove("Drop coin");
         assertTrue(adventure.getCurrentRoom().getItems().contains("coin"));
-        assertTrue(adventure.getItemInventory().size() < 1);
+        assertTrue(adventure.getPlayer().getItemInventory().size() < 1);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class AdventureTester {
 
         String[] expectedItemInventory = {"key", "sweatshirt"};
 
-        assertEquals(Arrays.asList(expectedItemInventory), adventure.getItemInventory());
+        assertEquals(Arrays.asList(expectedItemInventory), adventure.getPlayer().getItemInventory());
     }
 
     @Test

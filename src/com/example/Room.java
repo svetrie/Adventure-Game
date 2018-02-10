@@ -1,16 +1,36 @@
 package com.example;
 
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Room {
     private String name;
     private String description;
-    private ArrayList<String> items = new ArrayList<String>();
+    private ArrayList<Item> items = new ArrayList<Item>();
+    //private HashMap<String,Item> itemNameMap = new HashMap<>();
     private Direction[] directions;
+    //private HashMap<String, Direction> directionNameMap;
+    private String[] monstersInRoom;
+
 
     /** Used by the isValidMap method in the GameWorld class to check if a Room object
      * has already been visited by the method */
     private boolean visited;
+/*
+    public Room() {
+
+        for (Item item : items) {
+            itemNameMap.put(item.getName(), item);
+        }
+
+        for (Direction direction : directions) {
+            directionNameMap.put(direction.getDirectionName(), direction);
+        }
+
+        visited = false;
+    }
+*/
 
     public String getName() {
         return name;
@@ -20,19 +40,27 @@ public class Room {
         return description;
     }
 
-    public ArrayList<String> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
 
-    public void addItem(String itemName) {
-        items.add(itemName);
+    public Item getItemByName(String itemName) {
+        for (Item item : items) {
+
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return item;
+            }
+        }
+
+        return null;
     }
 
-    public void removeItem(String itemName) {
+    public void addItem(Item item) {
+        items.add(item);
+    }
 
-        if (items.contains(itemName)) {
-            items.remove(itemName);
-        }
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 
     public Direction[] getDirections() {
@@ -65,6 +93,10 @@ public class Room {
         this.visited = visited;
     }
 
+    public String[] getMonstersInRoom() {
+        return monstersInRoom;
+    }
+
     public void printItemsInRoom() {
         System.out.print("This room contains ");
 
@@ -73,7 +105,7 @@ public class Room {
         } else {
 
             for (int i = 0; i < items.size(); i++) {
-                System.out.print(items.get(i));
+                System.out.print(items.get(i).getName());
 
                 //Makes sure there is not a trailing comma after the last item is printed
                 if (i < items.size() - 1) {

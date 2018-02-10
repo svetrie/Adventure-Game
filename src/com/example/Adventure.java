@@ -17,9 +17,9 @@ public class Adventure {
     private static final String DISPLAY_ITEMS = "list";
 
     private GameWorld gameWorld;
+    private Player player;
     private String startingRoomName;
     private String endingRoomName;
-    private ArrayList<String> itemInventory;
     private Room currentRoom;
 
     public static void main(String[] args) {
@@ -44,15 +44,16 @@ public class Adventure {
         endingRoomName = gameWorld.getEndingRoom();
         startingRoomName = gameWorld.getStartingRoom();
         currentRoom = gameWorld.getRoomByName(startingRoomName);
-        itemInventory = new ArrayList<String>();
+
+        player = gameWorld.getPlayer();
     }
 
     public GameWorld getGameWorld() {
         return gameWorld;
     }
 
-    public ArrayList<String> getItemInventory() {
-        return itemInventory;
+    public Player getPlayer() {
+        return player;
     }
 
     public Room getCurrentRoom() {
@@ -67,26 +68,6 @@ public class Adventure {
         return endingRoomName;
     }
 
-    public void printItemInventory() {
-        System.out.print("You are carrying ");
-
-        if (itemInventory.size() < 1) {
-            System.out.print("nothing");
-        } else {
-
-            for (int i = 0; i < itemInventory.size(); i++) {
-                System.out.print(itemInventory.get(i));
-
-                //Makes sure there is not a trailing comma after the last item is printed
-                if (i < itemInventory.size() - 1) {
-                    System.out.print(", ");
-                }
-            }
-        }
-
-        System.out.println();
-    }
-
     /**
      * Removes item from current room and adds it to user's inventory if item exists
      * @param userInput userInput is the user's input split into words
@@ -99,10 +80,12 @@ public class Adventure {
         String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
         String itemName = String.join(" ", itemNameAsArray);
 
-        if (currentRoom.getItems().contains(itemName)) {
+        Item itemTaken = currentRoom.getItemByName(itemName);
 
-            itemInventory.add(itemName);
-            currentRoom.removeItem(itemName);
+        if (itemTaken != null) {
+
+            player.addItem(itemTaken);
+            currentRoom.removeItem(itemTaken);
 
             return "You are carrying " + itemName;
         } else {
@@ -123,10 +106,12 @@ public class Adventure {
         String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
         String itemName = String.join(" ", itemNameAsArray);
 
-        if (itemInventory.contains(itemName)) {
+        Item itemDropped = player.getItemByName(itemName);
 
-            itemInventory.remove(itemName);
-            currentRoom.addItem(itemName);
+        if (itemDropped != null) {
+
+            player.removeItem(itemDropped);
+            currentRoom.addItem(itemDropped);
 
             return "You dropped " + itemName;
         } else {
@@ -179,7 +164,7 @@ public class Adventure {
         } else if (usersNextMove[0].equalsIgnoreCase(GO_DIRECTION) && usersNextMove.length > 1) {
             System.out.println(changeRooms(usersNextMove[1]));
         } else if (usersNextMove[0].equalsIgnoreCase(DISPLAY_ITEMS)) {
-            printItemInventory();
+            gameWorld.getPlayer().printItemInventory();
         } else if (usersNextMove[0].equalsIgnoreCase(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
             System.exit(0);
         } else {

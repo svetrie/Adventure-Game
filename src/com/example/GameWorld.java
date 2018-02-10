@@ -5,8 +5,10 @@ import java.util.HashMap;
 public class GameWorld {
     private String startingRoom;
     private String endingRoom;
-    // Create a hashmap for linking rooms to their names
+    private HashMap<String,Room> nameToRoom = new HashMap<>();
     private Room[] rooms;
+    private Player player;
+    private Monster[] monsters;
 
 
     public String getStartingRoom() {
@@ -24,12 +26,20 @@ public class GameWorld {
     public Room getRoomByName(String roomName) {
         for (Room room : rooms) {
 
-            if (room.getName().equals(roomName)) {
+            if (room.getName().equalsIgnoreCase(roomName)) {
                 return room;
             }
         }
 
         return null;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Monster[] getMonsters() {
+        return monsters;
     }
 
     public void isValidMap(String currentRoomName, String endingRoomName) {
