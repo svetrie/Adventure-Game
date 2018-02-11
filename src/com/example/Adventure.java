@@ -180,9 +180,14 @@ public class Adventure {
             gameWorld.getPlayer().printItemInventory();
         } else if (usersNextMove[0].equalsIgnoreCase(EXIT_GAME) || usersNextMove[0].equals(QUIT_GAME)) {
             System.exit(0);
-        } else if (usersNextMove.length > 1 && (usersNextMove[0] + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
+        } else if (usersNextMove.length > 1 && (usersNextMove[0]
+                + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
             player.printPlayerInfo();
-        } else {
+        } else if (usersNextMove[0].equalsIgnoreCase(DUEL_MONSTER) && usersNextMove.length > 1) {
+            duelValidMonster(usersNextMove[1]);
+        }
+
+        else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
         }
 
@@ -201,5 +206,80 @@ public class Adventure {
 
         currentRoom.printCurrentRoom();
         System.out.println("You've reached your destination. Congrats on finishing the game!");
+    }
+
+    public void duelValidMonster(String monsterName) {
+        if (currentRoom.getMonster(monsterName) != null) {
+            System.out.println("You are in a battle with " + monsterName + " !");
+
+            Monster monster = gameWorld.getMonsterByName(monsterName);
+
+            fightDuel(monster);
+        } else {
+            System.out.print("You can't duel " + monsterName);
+        }
+    }
+
+
+
+    public void fightDuel(Monster monster) {
+        String[] usersNextMove;
+
+        while (player.getCurrentHealth() > 0 && monster.getCurrentHealth() > 0) {
+            String userInput = getUserInput();
+            usersNextMove = userInput.trim().split("\\s+");
+
+            if (usersNextMove[0].equalsIgnoreCase(ATTACK)) {
+                System.out.println(attack(monster, player.getAttack()));
+            } else if (usersNextMove.length > 2 && (usersNextMove[0]
+                    + usersNextMove[1]).equalsIgnoreCase(ATTACK_WITH_ITEM)) {
+                System.out.println(attackWithItem(monster, usersNextMove[3])); 
+            } else if (usersNextMove[0].equalsIgnoreCase(DISENGAGE)) {
+                System.out.println("You escaped from the duel!");
+                break;
+            } else if (usersNextMove[0].equalsIgnoreCase(STATUS)) {
+                printStatus(monster);
+            } else if (usersNextMove[0].equalsIgnoreCase(DISPLAY_ITEMS)) {
+                gameWorld.getPlayer().printItemInventory();
+            } else if (usersNextMove.length > 1 && (usersNextMove[0]
+                    + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
+                player.printPlayerInfo();
+            } else if (usersNextMove[0].equalsIgnoreCase(QUIT_GAME)) {
+                System.exit(0);
+            } else {
+                System.out.println("Sorry I don't understand \'" + userInput + "\'");
+            }
+        }
+    }
+
+    public String attack(Monster monster, double damage) {
+        monster.setCurrentHealth(damage - monster.getDefense());
+
+        if (monster.getCurrentHealth() <= 0) {
+            player.gainExperience(monster);
+            return "You defeated " + monster.getName() + " !";
+        } else {
+            player.setCurrentHealth(monster.getAttack() - player.getDefense());
+
+            if (player.getCurrentHealth() <= 0) {
+                System.out.println("Your health is 0. You've been defeated by " + monster.getName());
+                System.exit(0);
+            }
+
+            return "You damaged " + monster.getName() + " but "
+                    + monster.getName() + " attacked you back!";
+        }
+    }
+
+    public String attackWithItem(Monster monster, String itemName) {
+       Item attackItem = player.getItemByName(itemName);
+
+        if (attackItem != null) {
+            attack(monster, player.getAttack() + attackItem.getDamage());
+        } else {
+            return "You aren't carrying " + attackItem;
+        }
+
+        return "";
     }
 }

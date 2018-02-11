@@ -74,7 +74,6 @@ public class Room {
      * no such Direction object exits
      */
     public Direction getValidDirection(String directionName) {
-
         for (Direction direction : directions) {
 
             if (direction.getDirectionName().equalsIgnoreCase(directionName)) {
@@ -95,6 +94,17 @@ public class Room {
 
     public String[] getMonstersInRoom() {
         return monstersInRoom;
+    }
+
+    public String getMonster(String monsterName) {
+        for (String monster: monstersInRoom) {
+
+            if (monster.equalsIgnoreCase(monsterName)) {
+                return monster;
+            }
+        }
+
+        return null;
     }
 
     public void printItemsInRoom() {

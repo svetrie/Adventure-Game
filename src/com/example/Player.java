@@ -50,7 +50,9 @@ public class Player {
     }
 
     public void setCurrentHealth(double damage) {
-        currentHealth -= damage;
+        if (damage > 0) {
+            currentHealth -= damage;
+        }
     }
 
     public void printStatus() {
