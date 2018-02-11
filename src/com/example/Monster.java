@@ -1,11 +1,14 @@
 package com.example;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Monster {
     private static final double STATUS_INCREMENT = 5;
 
     private String name;
     private double attack;
     private double defense;
+    @SerializedName("health")
     private double maxHealth;
     private double currentHealth;
 
@@ -29,10 +32,14 @@ public class Monster {
         return currentHealth;
     }
 
-    public void setCurrentHealth(double damage) {
+    public void reduceCurrentHealth(double damage) {
         if (damage > 0) {
             currentHealth -= damage;
         }
+    }
+
+    public void initializeHealth() {
+        currentHealth = maxHealth;
     }
 
     public void printStatus() {
@@ -48,8 +55,10 @@ public class Monster {
         double percentOfHealthLost = 100 - percentOfHealthRemaining;
 
         while (percentOfHealthLost > 0) {
-            System.out.print('_');
+            System.out.print('-');
             percentOfHealthLost -= STATUS_INCREMENT;
         }
+
+        System.out.println();
     }
 }

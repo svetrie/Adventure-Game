@@ -204,7 +204,7 @@
   {
     "name": "Tony",
     "items": [],
-    "attack": 10.0,
+    "attack": 15.0,
     "defense": 10.0,
     "health": 50.0,
     "level": 1

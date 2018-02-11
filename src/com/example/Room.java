@@ -2,35 +2,18 @@ package com.example;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 
 public class Room {
     private String name;
     private String description;
     private ArrayList<Item> items = new ArrayList<Item>();
-    //private HashMap<String,Item> itemNameMap = new HashMap<>();
     private Direction[] directions;
-    //private HashMap<String, Direction> directionNameMap;
-    private String[] monstersInRoom;
-
-
+    private ArrayList<String> monstersInRoom;
+   // private boolean allMonstersDefeated;
     /** Used by the isValidMap method in the GameWorld class to check if a Room object
      * has already been visited by the method */
     private boolean visited;
-/*
-    public Room() {
-
-        for (Item item : items) {
-            itemNameMap.put(item.getName(), item);
-        }
-
-        for (Direction direction : directions) {
-            directionNameMap.put(direction.getDirectionName(), direction);
-        }
-
-        visited = false;
-    }
-*/
 
     public String getName() {
         return name;
@@ -92,7 +75,7 @@ public class Room {
         this.visited = visited;
     }
 
-    public String[] getMonstersInRoom() {
+    public ArrayList<String> getMonstersInRoom() {
         return monstersInRoom;
     }
 
@@ -105,6 +88,14 @@ public class Room {
         }
 
         return null;
+    }
+
+    public void removeMonster(String monsterName) {
+       monstersInRoom.remove(monsterName);
+    }
+
+    public boolean areAllMonstersDefeated() {
+        return (monstersInRoom == null || monstersInRoom.size() <= 0);
     }
 
     public void printItemsInRoom() {
@@ -137,17 +128,17 @@ public class Room {
 
     public void printMonstersInRoom() {
 
-        if (monstersInRoom == null || monstersInRoom.length < 1) {
+        if (monstersInRoom == null || monstersInRoom.size() < 1) {
             System.out.print("There are no monsters in this room");
         } else {
 
             System.out.print("You must battle ");
 
-            for (int i = 0; i < monstersInRoom.length; i++) {
-                System.out.print(monstersInRoom[i]);
+            for (int i = 0; i < monstersInRoom.size(); i++) {
+                System.out.print(monstersInRoom.get(i));
 
                 //Makes sure there is not a trailing comma after the last item is printed
-                if (i < monstersInRoom.length - 1) {
+                if (i < monstersInRoom.size() - 1) {
                     System.out.print(", ");
                 }
             }
@@ -162,9 +153,11 @@ public class Room {
         System.out.println(description);
 
         printItemsInRoom();
-       //Print directions only after player defeats monsters
-        printDirectionsFromRoom();
         printMonstersInRoom();
+
+       if (areAllMonstersDefeated()) {
+           printDirectionsFromRoom();
+       }
     }
 
 }

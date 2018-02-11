@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameWorld {
@@ -8,8 +9,15 @@ public class GameWorld {
     private HashMap<String,Room> nameToRoom = new HashMap<>();
     private Room[] rooms;
     private Player player;
-    private Monster[] monsters;
+    private ArrayList<Monster> monsters;
 
+    public void initializeHealth() {
+        for (Monster monster : monsters) {
+            monster.initializeHealth();
+        }
+
+        player.initializeHealth();
+    }
 
     public String getStartingRoom() {
         return startingRoom;
@@ -38,7 +46,7 @@ public class GameWorld {
         return player;
     }
 
-    public Monster[] getMonsters() {
+    public ArrayList<Monster> getMonsters() {
         return monsters;
     }
 
@@ -52,6 +60,10 @@ public class GameWorld {
 
         return null;
     }
+
+    /*public void removeMonster(Monster monster) {
+        monsters.remove(monster);
+    }*/
 
     public void isValidMap(String currentRoomName, String endingRoomName) {
 

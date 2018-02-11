@@ -29,6 +29,7 @@ public class Adventure {
     private String startingRoomName;
     private String endingRoomName;
     private Room currentRoom;
+    //private boolean
 
     public static void main(String[] args) {
         Adventure adventure;
@@ -43,6 +44,8 @@ public class Adventure {
         adventure.getGameWorld().isValidMap(adventure.getStartingRoomName(), adventure.getEndingRoomName());
         System.out.println();
 
+        adventure.getGameWorld().initializeHealth();
+
         adventure.playAdventureGame();
     }
 
@@ -54,6 +57,7 @@ public class Adventure {
         currentRoom = gameWorld.getRoomByName(startingRoomName);
 
         player = gameWorld.getPlayer();
+        player.initializeHealth();
     }
 
     public GameWorld getGameWorld() {
@@ -113,6 +117,7 @@ public class Adventure {
         copying the rest of userInput into a subarray and joining the contents of the subarray */
         String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
         String itemName = String.join(" ", itemNameAsArray);
+
 
         Item itemDropped = player.getItemByName(itemName);
 
@@ -174,7 +179,8 @@ public class Adventure {
             System.out.println(takeValidItem(usersNextMove));
         } else if (usersNextMove[0].equalsIgnoreCase(DROP_ITEM) && usersNextMove.length > 1) {
             System.out.println(dropValidItem(usersNextMove));
-        } else if (usersNextMove[0].equalsIgnoreCase(GO_DIRECTION) && usersNextMove.length > 1) {
+        } else if (currentRoom.areAllMonstersDefeated() && usersNextMove[0]
+                .equalsIgnoreCase(GO_DIRECTION) && usersNextMove.length > 1) {
             System.out.println(changeRooms(usersNextMove[1]));
         } else if (usersNextMove[0].equalsIgnoreCase(DISPLAY_ITEMS)) {
             gameWorld.getPlayer().printItemInventory();
@@ -184,10 +190,9 @@ public class Adventure {
                 + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
             player.printPlayerInfo();
         } else if (usersNextMove[0].equalsIgnoreCase(DUEL_MONSTER) && usersNextMove.length > 1) {
-            duelValidMonster(usersNextMove[1]);
-        }
-
-        else {
+            String[] monsterNameAsArray = Arrays.copyOfRange(usersNextMove, 1, usersNextMove.length);
+            duelValidMonster(String.join(" ", monsterNameAsArray));
+        } else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
         }
 
@@ -210,7 +215,7 @@ public class Adventure {
 
     public void duelValidMonster(String monsterName) {
         if (currentRoom.getMonster(monsterName) != null) {
-            System.out.println("You are in a battle with " + monsterName + " !");
+            System.out.println("You are in a battle with " + monsterName + "!");
 
             Monster monster = gameWorld.getMonsterByName(monsterName);
 
@@ -224,8 +229,9 @@ public class Adventure {
 
     public void fightDuel(Monster monster) {
         String[] usersNextMove;
+        monster.initializeHealth();
 
-        while (player.getCurrentHealth() > 0 && monster.getCurrentHealth() > 0) {
+        do {
             String userInput = getUserInput();
             usersNextMove = userInput.trim().split("\\s+");
 
@@ -233,7 +239,7 @@ public class Adventure {
                 System.out.println(attack(monster, player.getAttack()));
             } else if (usersNextMove.length > 2 && (usersNextMove[0]
                     + usersNextMove[1]).equalsIgnoreCase(ATTACK_WITH_ITEM)) {
-                System.out.println(attackWithItem(monster, usersNextMove[3])); 
+                System.out.println(attackWithItem(monster, usersNextMove[3]));
             } else if (usersNextMove[0].equalsIgnoreCase(DISENGAGE)) {
                 System.out.println("You escaped from the duel!");
                 break;
@@ -249,17 +255,20 @@ public class Adventure {
             } else {
                 System.out.println("Sorry I don't understand \'" + userInput + "\'");
             }
-        }
+        } while (player.getCurrentHealth() > 0 && monster.getCurrentHealth() > 0);
     }
 
     public String attack(Monster monster, double damage) {
-        monster.setCurrentHealth(damage - monster.getDefense());
+        monster.reduceCurrentHealth(damage - monster.getDefense());
 
         if (monster.getCurrentHealth() <= 0) {
             player.gainExperience(monster);
+
+            currentRoom.removeMonster(monster.getName());
+
             return "You defeated " + monster.getName() + " !";
         } else {
-            player.setCurrentHealth(monster.getAttack() - player.getDefense());
+            player.reduceCurrentHealth( monster.getAttack() - player.getDefense());
 
             if (player.getCurrentHealth() <= 0) {
                 System.out.println("Your health is 0. You've been defeated by " + monster.getName());

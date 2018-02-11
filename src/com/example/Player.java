@@ -1,5 +1,7 @@
 package com.example;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -17,8 +19,9 @@ public class Player {
     private ArrayList<Item> itemInventory = new ArrayList<Item>();
     private double attack;
     private double defense;
+    @SerializedName("health")
     private double maxHealth;
-    private double currentHealth;
+    private double currentHealth = maxHealth;
 
     private int level;
     private double totalExp;
@@ -49,10 +52,14 @@ public class Player {
         return currentHealth;
     }
 
-    public void setCurrentHealth(double damage) {
+    public void reduceCurrentHealth(double damage) {
         if (damage > 0) {
             currentHealth -= damage;
         }
+    }
+
+    public void initializeHealth() {
+        currentHealth = maxHealth;
     }
 
     public void printStatus() {
@@ -68,9 +75,11 @@ public class Player {
         double percentOfHealthLost = 100 - percentOfHealthRemaining;
 
         while (percentOfHealthLost > 0) {
-            System.out.print('_');
+            System.out.print('-');
             percentOfHealthLost -= STATUS_INCREMENT;
         }
+
+        System.out.println();
     }
 
     public int getLevel() {
