@@ -64,6 +64,7 @@ public class Player {
 
     public void printStatus() {
         double percentOfHealthRemaining = (currentHealth / maxHealth) * 100;
+        double percentOfHealthLost = 100 - percentOfHealthRemaining;
 
         System.out.println("Player's health: ");
 
@@ -71,8 +72,6 @@ public class Player {
             System.out.print('*');
             percentOfHealthRemaining -= STATUS_INCREMENT;
         }
-
-        double percentOfHealthLost = 100 - percentOfHealthRemaining;
 
         while (percentOfHealthLost > 0) {
             System.out.print('-');

@@ -195,7 +195,6 @@ public class Adventure {
         } else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
         }
-
     }
 
     /**
@@ -221,7 +220,7 @@ public class Adventure {
 
             fightDuel(monster);
         } else {
-            System.out.print("You can't duel " + monsterName);
+            System.out.println("You can't duel " + monsterName);
         }
     }
 
@@ -231,7 +230,7 @@ public class Adventure {
         String[] usersNextMove;
         monster.initializeHealth();
 
-        do {
+        while (player.getCurrentHealth() > 0 && monster.getCurrentHealth() > 0) {
             String userInput = getUserInput();
             usersNextMove = userInput.trim().split("\\s+");
 
@@ -255,7 +254,7 @@ public class Adventure {
             } else {
                 System.out.println("Sorry I don't understand \'" + userInput + "\'");
             }
-        } while (player.getCurrentHealth() > 0 && monster.getCurrentHealth() > 0);
+        }
     }
 
     public String attack(Monster monster, double damage) {
