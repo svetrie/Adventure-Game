@@ -143,6 +143,11 @@ public class Adventure {
         }
     }
 
+    public void printStatus(Monster monster) {
+        player.printStatus();
+        monster.printStatus();
+    }
+
     /**
      * Gets user's input using Scanner
      * @return user's input
@@ -177,8 +182,7 @@ public class Adventure {
             System.exit(0);
         } else if (usersNextMove.length > 1 && (usersNextMove[0] + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
             player.printPlayerInfo();
-        }
-        else {
+        } else {
             System.out.println("Sorry I don't understand \'" + userInput + "\'");
         }
 

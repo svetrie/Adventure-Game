@@ -11,6 +11,7 @@ public class Player {
     private static final double ATTACK_MULTIPLIER = 1.5;
     private static final double DEFENSE_MULTIPLIER = 1.5;
     private static final double HEALTH_MULTIPLIER = 1.3;
+    private static final int STATUS_INCREMENT = 5;
 
     private String name;
     private ArrayList<Item> itemInventory = new ArrayList<Item>();
@@ -40,8 +41,34 @@ public class Player {
         return defense;
     }
 
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
     public double getCurrentHealth() {
         return currentHealth;
+    }
+
+    public void setCurrentHealth(double damage) {
+        currentHealth -= damage;
+    }
+
+    public void printStatus() {
+        double percentOfHealthRemaining = (currentHealth / maxHealth) * 100;
+
+        System.out.println("Player's health: ");
+
+        while(percentOfHealthRemaining >= STATUS_INCREMENT) {
+            System.out.print('*');
+            percentOfHealthRemaining -= STATUS_INCREMENT;
+        }
+
+        double percentOfHealthLost = 100 - percentOfHealthRemaining;
+
+        while (percentOfHealthLost > 0) {
+            System.out.print('_');
+            percentOfHealthLost -= STATUS_INCREMENT;
+        }
     }
 
     public int getLevel() {
