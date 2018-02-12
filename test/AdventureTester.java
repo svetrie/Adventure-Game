@@ -1,5 +1,6 @@
 import com.example.Adventure;
 import com.example.GameWorld;
+import com.example.Item;
 import com.example.JsonFileLoader;
 
 import org.junit.Before;
@@ -10,19 +11,20 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class AdventureTester {
-    private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
+    private static final String JSON_FILE = "AlternateAdventure.json";
     private static Adventure adventure;
 
     @Before
     public void setUp() {
-        adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
+        adventure = new Adventure(JsonFileLoader.parseJsonFileUsingFilePath(JSON_FILE));
     }
 
     @Test
     public void takeItemTest() {
-        adventure.usersNextMove("Take coin");
+        adventure.usersNextMove("Take textbook");
+
         assertTrue(adventure.getCurrentRoom().getItems().size() < 1);
-        assertTrue(adventure.getPlayer().getItemInventory().contains("coin"));
+        assertTrue(adventure.getPlayer().getItemByName("textbook") != null);
     }
 
     @Test
@@ -32,21 +34,22 @@ public class AdventureTester {
 
     @Test
     public void dropItemTest() {
-        adventure.usersNextMove("Take coin");
-        adventure.usersNextMove("Drop coin");
-        assertTrue(adventure.getCurrentRoom().getItems().contains("coin"));
+        adventure.usersNextMove("Take textbook");
+        adventure.usersNextMove("Drop textbook");
+
+        assertTrue(adventure.getCurrentRoom().getItemByName("textbook") != null);
         assertTrue(adventure.getPlayer().getItemInventory().size() < 1);
     }
 
     @Test
     public void dropInvalidItemTest() {
-        assertEquals("You can't drop phone", adventure.dropValidItem(new String[] {"take", "phone"}));
+        assertEquals("You can't drop phone", adventure.dropValidItem(new String[] {"drop", "phone"}));
     }
 
     @Test
     public void moveInADirectionTest() {
         adventure.usersNextMove("Go East");
-        assertEquals("SiebelEntry", adventure.getCurrentRoom().getName());
+        assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
     }
 
     @Test
@@ -56,25 +59,44 @@ public class AdventureTester {
 
     @Test
     public void getItemInventory() {
+        adventure.usersNextMove("take textbook");
         adventure.usersNextMove("go east");
-        adventure.usersNextMove("take key");
-        adventure.usersNextMove("take sweatshirt");
+        adventure.usersNextMove("take pencil");
+        adventure.usersNextMove("take calculator");
 
-        String[] expectedItemInventory = {"key", "sweatshirt"};
+        String[] expectedItemInventory = {"textbook", "pencil", "calculator"};
 
-        assertEquals(Arrays.asList(expectedItemInventory), adventure.getPlayer().getItemInventory());
+        for (String itemName : expectedItemInventory) {
+            assertTrue(adventure.getPlayer().getItemByName(itemName) != null);
+        }
     }
 
     @Test
     public void acceptUserInputInAllCapsTest() {
         adventure.usersNextMove("GO EAST");
-        assertEquals("SiebelEntry", adventure.getCurrentRoom().getName());
+        assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
+
+        adventure.usersNextMove("TAKE PENCIL");
+        assertTrue(adventure.getPlayer().getItemByName("pencil") != null);
     }
 
     @Test
     public void acceptUserInputWithLargeSpaces() {
         adventure.usersNextMove("   Go  East  ");
-        assertEquals("SiebelEntry", adventure.getCurrentRoom().getName());
+        assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
+
+        adventure.usersNextMove(" take   pencil   ");
+        assertTrue(adventure.getPlayer().getItemByName("pencil") != null);
     }
+
+    @Test
+    public void changeRoomsWithoutDefeatingMonstersTest() {
+        adventure.usersNextMove("Go East");
+        adventure.usersNextMove("Go West");
+
+        assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
+    }
+
+
 
 }
