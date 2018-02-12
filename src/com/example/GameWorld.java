@@ -6,17 +6,15 @@ import java.util.HashMap;
 public class GameWorld {
     private String startingRoom;
     private String endingRoom;
-    private HashMap<String,Room> nameToRoom = new HashMap<>();
     private Room[] rooms;
+    private HashMap<String,Room> roomMap = new HashMap<>();
     private Player player;
     private ArrayList<Monster> monsters;
 
-    public void initializeHealth() {
-        for (Monster monster : monsters) {
-            monster.initializeHealth();
+    public void initializeRoomMap(){
+        for (Room room : rooms) {
+            roomMap.put(room.getName(), room);
         }
-
-        player.initializeHealth();
     }
 
     public String getStartingRoom() {
@@ -32,14 +30,15 @@ public class GameWorld {
     }
 
     public Room getRoomByName(String roomName) {
-        for (Room room : rooms) {
+        /*for (Room room : rooms) {
 
             if (room.getName().equalsIgnoreCase(roomName)) {
                 return room;
             }
         }
 
-        return null;
+        return null;*/
+        return roomMap.get(roomName);
     }
 
     public Player getPlayer() {
@@ -61,10 +60,6 @@ public class GameWorld {
         return null;
     }
 
-    /*public void removeMonster(Monster monster) {
-        monsters.remove(monster);
-    }*/
-
     public void isValidMap(String currentRoomName, String endingRoomName) {
 
         Room currentRoom = getRoomByName(currentRoomName);
@@ -81,4 +76,5 @@ public class GameWorld {
             }
         }
     }
+
 }

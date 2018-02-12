@@ -7,28 +7,30 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameWorldTester {
-    private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
+    private static final String JSON_FILE = "AlternateAdventure.json";
     private static GameWorld gameWorld;
 
     @Before
     public void setUp() {
-        gameWorld = JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL);
+        gameWorld = JsonFileLoader.parseJsonFileUsingFilePath(JSON_FILE);
+        gameWorld.initializeRoomMap();
     }
 
     @Test
     public void getStartingRoomTest() {
-        assertEquals("MatthewsStreet", gameWorld.getStartingRoom());
+        assertEquals("IlliniUnionBookstore", gameWorld.getStartingRoom());
     }
 
     @Test
     public void getEndingRoomTest() {
-        assertEquals("Siebel1314", gameWorld.getEndingRoom());
+        assertEquals("Foellinger", gameWorld.getEndingRoom());
     }
 
     @Test
     public void getRoomsTest() {
-        String[] expectedRoomNames = {"MatthewsStreet", "SiebelEntry", "AcmOffice", "SiebelNorthHallway",
-                "Siebel1112", "SiebelEastHallway", "Siebel1314", "SiebelBasement"};
+        String[] expectedRoomNames = {"IlliniUnionBookstore", "HenryAdministrationBuilding",
+                "IlliniUnion", "Altgeld", "NoyesLaboratory", "DavenportHall", "EnglishBuilding",
+                "ForeignLanguagesBuilding", "Foellinger"};
 
         for (int i = 0; i < gameWorld.getRooms().length; i++) {
             assertEquals(expectedRoomNames[i], gameWorld.getRooms()[i].getName());
@@ -38,8 +40,8 @@ public class GameWorldTester {
 
     @Test
     public void getRoomByNameTest() {
-        assertEquals("You are in the ACM office.  There are lots of friendly ACM people.",
-                gameWorld.getRoomByName("AcmOffice").getDescription());
+        assertEquals("You are in Noyes Laboratory. A mob of students exit Noyes 100 as their lecture ends",
+                gameWorld.getRoomByName("NoyesLaboratory").getDescription());
     }
 
 }

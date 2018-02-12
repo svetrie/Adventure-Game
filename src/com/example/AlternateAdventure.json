@@ -90,7 +90,7 @@
     },
     {
       "name": "NoyesLaboratory",
-      "description": "You are in NoyesLaboratory. A mob of students exit Noyes 100 as their lecture ends",
+      "description": "You are in Noyes Laboratory. A mob of students exit Noyes 100 as their lecture ends",
       "items": [
         {
           "name": "lab coat",

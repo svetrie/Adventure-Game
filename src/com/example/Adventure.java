@@ -44,13 +44,12 @@ public class Adventure {
         adventure.getGameWorld().isValidMap(adventure.getStartingRoomName(), adventure.getEndingRoomName());
         System.out.println();
 
-        adventure.getGameWorld().initializeHealth();
-
         adventure.playAdventureGame();
     }
 
     public Adventure(GameWorld layout) {
         gameWorld = layout;
+        gameWorld.initializeRoomMap();
 
         endingRoomName = gameWorld.getEndingRoom();
         startingRoomName = gameWorld.getStartingRoom();

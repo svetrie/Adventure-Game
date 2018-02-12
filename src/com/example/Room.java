@@ -143,7 +143,7 @@ public class Room {
                 }
             }
 
-            System.out.print(" to escape!");
+            System.out.print(" to move further!");
         }
 
         System.out.println();
