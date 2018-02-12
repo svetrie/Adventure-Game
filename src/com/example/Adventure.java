@@ -1,6 +1,5 @@
 package com.example;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -56,7 +55,7 @@ public class Adventure {
         currentRoom = gameWorld.getRoomByName(startingRoomName);
 
         player = gameWorld.getPlayer();
-        player.initializeHealth();
+        player.initializeCurrentHealth();
     }
 
     public GameWorld getGameWorld() {
@@ -196,21 +195,6 @@ public class Adventure {
         }
     }
 
-    /**
-     * Uses helper methods to run an Adventure game
-     */
-    public void playAdventureGame() {
-        System.out.println("Your journey begins here");
-
-        while(!currentRoom.getName().equals(endingRoomName)) {
-            currentRoom.printCurrentRoom();
-            usersNextMove(getUserInput());
-        }
-
-        currentRoom.printCurrentRoom();
-        System.out.println("You've reached your destination. Congrats on finishing the game!");
-    }
-
     public void duelValidMonster(String monsterName) {
         if (currentRoom.getMonster(monsterName) != null) {
             System.out.println("You are in a battle with " + monsterName + "!");
@@ -288,5 +272,20 @@ public class Adventure {
         }
 
         return "";
+    }
+
+    /**
+     * Uses helper methods to run an Adventure game
+     */
+    public void playAdventureGame() {
+        System.out.println("Your journey begins here");
+
+        while(!currentRoom.getName().equals(endingRoomName)) {
+            currentRoom.printCurrentRoom();
+            usersNextMove(getUserInput());
+        }
+
+        currentRoom.printCurrentRoom();
+        System.out.println("You've reached your destination. Congrats on finishing the game!");
     }
 }

@@ -58,7 +58,7 @@ public class Player {
         }
     }
 
-    public void initializeHealth() {
+    public void initializeCurrentHealth() {
         currentHealth = maxHealth;
     }
 

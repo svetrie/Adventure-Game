@@ -1,7 +1,9 @@
 import com.example.Adventure;
 import com.example.GameWorld;
 import com.example.Item;
+import com.example.Monster;
 import com.example.JsonFileLoader;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,18 +60,51 @@ public class AdventureTester {
     }
 
     @Test
+    public void changeRoomsWithoutDefeatingMonstersTest() {
+        adventure.usersNextMove("Go East");
+        adventure.usersNextMove("Go West");
+
+        assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
+    }
+
+    @Test
+    public void attackMonsterTest() {
+        Monster justinBieber = adventure.getGameWorld().getMonsterByName("justin bieber");
+        justinBieber.initializeHealth();
+
+        adventure.usersNextMove("Go east");
+        adventure.attack(justinBieber, 15);
+
+        assertEquals( 5, justinBieber.getCurrentHealth(), 0.0001);
+    }
+
+    @Test
+    public void attackMonsterWithItemTest() {
+        Monster justinBieber = adventure.getGameWorld().getMonsterByName("justin bieber");
+        justinBieber.initializeHealth();
+
+        adventure.usersNextMove("Go east");
+        adventure.usersNextMove("take calculator");
+        adventure.attackWithItem(justinBieber, "calculator");
+
+        assertEquals( 2.5, justinBieber.getCurrentHealth(), 0.0001);
+    }
+
+    /*
+    @Test
     public void getItemInventory() {
         adventure.usersNextMove("take textbook");
         adventure.usersNextMove("go east");
         adventure.usersNextMove("take pencil");
         adventure.usersNextMove("take calculator");
+        adventure.usersNextMove("list");
 
         String[] expectedItemInventory = {"textbook", "pencil", "calculator"};
 
         for (String itemName : expectedItemInventory) {
             assertTrue(adventure.getPlayer().getItemByName(itemName) != null);
         }
-    }
+    }*/
 
     @Test
     public void acceptUserInputInAllCapsTest() {
@@ -88,15 +123,5 @@ public class AdventureTester {
         adventure.usersNextMove(" take   pencil   ");
         assertTrue(adventure.getPlayer().getItemByName("pencil") != null);
     }
-
-    @Test
-    public void changeRoomsWithoutDefeatingMonstersTest() {
-        adventure.usersNextMove("Go East");
-        adventure.usersNextMove("Go West");
-
-        assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
-    }
-
-
 
 }
