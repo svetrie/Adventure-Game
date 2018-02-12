@@ -76,6 +76,7 @@ public class AdventureTester {
         adventure.attack(justinBieber, 15);
 
         assertEquals( 5, justinBieber.getCurrentHealth(), 0.0001);
+        assertEquals(48, adventure.getPlayer().getCurrentHealth(), 0.0001);
     }
 
     @Test
@@ -88,23 +89,22 @@ public class AdventureTester {
         adventure.attackWithItem(justinBieber, "calculator");
 
         assertEquals( 2.5, justinBieber.getCurrentHealth(), 0.0001);
+        assertEquals(48, adventure.getPlayer().getCurrentHealth(), 0.0001);
     }
 
-    /*
     @Test
-    public void getItemInventory() {
+    public void getPlayerItemInventory() {
         adventure.usersNextMove("take textbook");
         adventure.usersNextMove("go east");
         adventure.usersNextMove("take pencil");
         adventure.usersNextMove("take calculator");
-        adventure.usersNextMove("list");
 
         String[] expectedItemInventory = {"textbook", "pencil", "calculator"};
 
         for (String itemName : expectedItemInventory) {
             assertTrue(adventure.getPlayer().getItemByName(itemName) != null);
         }
-    }*/
+    }
 
     @Test
     public void acceptUserInputInAllCapsTest() {

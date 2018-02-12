@@ -186,7 +186,9 @@ public class Adventure {
             System.exit(0);
         } else if (usersNextMove.length > 1 && (usersNextMove[0]
                 + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
-            player.printPlayerInfo();
+            System.out.println(player.getPlayerInfo());
+            System.out.println(player.getTotalExp());
+            System.out.println(player.getExpForNextLevel());
         } else if (usersNextMove[0].equalsIgnoreCase(DUEL_MONSTER) && usersNextMove.length > 1) {
             String[] monsterNameAsArray = Arrays.copyOfRange(usersNextMove, 1, usersNextMove.length);
             duelValidMonster(String.join(" ", monsterNameAsArray));
@@ -231,7 +233,7 @@ public class Adventure {
                 gameWorld.getPlayer().printItemInventory();
             } else if (usersNextMove.length > 1 && (usersNextMove[0]
                     + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
-                player.printPlayerInfo();
+                player.getPlayerInfo();
             } else if (usersNextMove[0].equalsIgnoreCase(QUIT_GAME)) {
                 System.exit(0);
             } else {

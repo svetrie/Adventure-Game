@@ -207,12 +207,12 @@
     "attack": 15.0,
     "defense": 10.0,
     "health": 50.0,
-    "level": 1
+    "level": 0
   },
   "monsters": [
     {
       "name": "Justin Bieber",
-      "attack": 10.0,
+      "attack": 12.0,
       "defense": 10.0,
       "health": 10.0
     },
