@@ -28,7 +28,6 @@ public class Adventure {
     private String startingRoomName;
     private String endingRoomName;
     private Room currentRoom;
-    //private boolean
 
     public static void main(String[] args) {
         Adventure adventure;
@@ -233,7 +232,7 @@ public class Adventure {
                 gameWorld.getPlayer().printItemInventory();
             } else if (usersNextMove.length > 1 && (usersNextMove[0]
                     + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
-                player.getPlayerInfo();
+                System.out.println(player.getPlayerInfo());
             } else if (usersNextMove[0].equalsIgnoreCase(QUIT_GAME)) {
                 System.exit(0);
             } else {

@@ -8,7 +8,7 @@
       "items": [
         {
           "name": "textbook",
-          "damage": 1.5
+          "damage": 3.0
         }
       ],
       "directions": [
@@ -24,11 +24,11 @@
       "items": [
         {
           "name": "pencil",
-          "damage": 1.0
+          "damage": 5.0
         },
         {
           "name": "calculator",
-          "damage": 2.5
+          "damage": 6.5
         }
       ],
       "directions": [
@@ -53,11 +53,11 @@
       "items": [
         {
           "name": "caramel mocha",
-          "damage": 3.0
+          "damage": 15.0
         },
         {
           "name": "vanilla latte",
-          "damage": 4.0
+          "damage": 20.0
         }
       ],
       "directions": [
@@ -94,15 +94,15 @@
       "items": [
         {
           "name": "lab coat",
-          "damage": 5.0
+          "damage": 75
         },
         {
           "name": "beaker",
-          "damage": 5.0
+          "damage": 75
         },
         {
           "name": "boxing gloves",
-          "damage": 7.5
+          "damage": 150
         }
       ],
       "directions": [
@@ -127,11 +127,11 @@
       "items": [
         {
           "name": "basketball",
-          "damage": 10.0
+          "damage": 350.0
         },
         {
           "name": "cupcake",
-          "damage": 10.0
+          "damage": 400.0
         }
       ],
       "directions": [
@@ -156,7 +156,7 @@
       "item": [
         {
           "name": "lip kit",
-          "damage": 12.5
+          "damage": 5000
         }
       ],
       "directions": [
@@ -173,7 +173,7 @@
       "items": [
         {
           "name": "Yeezys",
-          "damage": 15.0
+          "damage": 1000
         }
       ],
       "directions": [
@@ -206,63 +206,63 @@
     "items": [],
     "attack": 15.0,
     "defense": 10.0,
-    "health": 50.0,
+    "health": 30.0,
     "level": 0
   },
   "monsters": [
     {
       "name": "Justin Bieber",
-      "attack": 12.0,
-      "defense": 10.0,
+      "attack": 12.5,
+      "defense": 12.5,
       "health": 10.0
     },
     {
       "name": "Taylor Swift",
-      "attack": 15.0,
-      "defense": 12.0,
-      "health": 10.0
+      "attack": 150.0,
+      "defense": 125.0,
+      "health": 125.0
     },
     {
-      "name": "Kristen Stewart",
-      "attack": 15.0,
-      "defense": 10.0,
-      "health": 20.0
+      "name": "Lindsay Lohan",
+      "attack": 600,
+      "defense": 800,
+      "health": 200.0
     },
     {
       "name": "Connor McGregor",
-      "attack": 20.0,
-      "defense": 15.0,
-      "health": 15.0
+      "attack": 600,
+      "defense": 800,
+      "health": 300
     },
     {
       "name": "Floyd Mayweather",
-      "attack": 15.0,
-      "defense": 20.0,
-      "health": 20.0
+      "attack": 2250,
+      "defense": 2500,
+      "health": 1000
     },
     {
       "name": "Kevin Durant",
-      "attack": 25.0,
-      "defense": 15.0,
-      "health": 20.0
+      "attack": 4750,
+      "defense": 6000,
+      "health": 2000
     },
     {
       "name": "Kylie Jenner",
-      "attack": 22.5,
-      "defense": 22.5,
-      "health": 25.0
+      "attack": 5000,
+      "defense": 6250,
+      "health": 1000
     },
     {
       "name": "Kim Kardashian",
-      "attack": 25.0,
-      "defense": 30.0,
-      "health": 25.0
+      "attack": 6000,
+      "defense": 7000,
+      "health": 3000
     },
     {
       "name": "Kanye West",
-      "attack": 30.0,
-      "defense": 25.0,
-      "health": 25.0
+      "attack": 6500,
+      "defense": 7500,
+      "health": 3500
     }
   ]
 }
