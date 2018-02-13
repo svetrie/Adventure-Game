@@ -11,7 +11,6 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class RoomTester {
-    private static final String DEFAULT_JSON_FILE_URL = "https://courses.engr.illinois.edu/cs126/adventure/siebel.json";
     private static GameWorld gameWorld;
     private static Room siebel1112;
 

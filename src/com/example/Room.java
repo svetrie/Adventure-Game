@@ -145,13 +145,12 @@ public class Room {
 
     public void printCurrentRoom() {
         System.out.println(description);
-
         printItemsInRoom();
         printMonstersInRoom();
 
-       if (areAllMonstersDefeated()) {
+        if (areAllMonstersDefeated()) {
            printDirectionsFromRoom();
-       }
+        }
     }
 
 }

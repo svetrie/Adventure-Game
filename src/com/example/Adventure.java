@@ -81,12 +81,14 @@ public class Adventure {
 
         Item itemTaken = currentRoom.getItemByName(itemName);
 
-        if (itemTaken != null) {
+        if (itemTaken != null && currentRoom.areAllMonstersDefeated()) {
 
             player.addItem(itemTaken);
             currentRoom.removeItem(itemTaken);
 
             return "You are carrying " + itemName;
+        } else if (itemTaken != null) {
+            return "There are still monsters here, you can't take that";
         } else {
             return "You can't take " + itemName;
         }
@@ -175,8 +177,6 @@ public class Adventure {
         } else if (usersNextMove.length > 1 && (usersNextMove[0]
                 + usersNextMove[1]).equalsIgnoreCase(PLAYER_INFO)) {
             System.out.println(player.getPlayerInfo());
-            System.out.println(player.getTotalExp());
-            System.out.println(player.getExpForNextLevel());
         } else if (usersNextMove[0].equalsIgnoreCase(DUEL_MONSTER) && usersNextMove.length > 1) {
             String[] monsterNameAsArray = Arrays.copyOfRange(usersNextMove, 1, usersNextMove.length);
             duelValidMonster(String.join(" ", monsterNameAsArray));

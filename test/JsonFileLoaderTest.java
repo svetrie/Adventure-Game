@@ -19,7 +19,7 @@ public class JsonFileLoaderTest {
 
     @Test
     public void parseJsonFileUsingFilePath() {
-        gameWorld = JsonFileLoader.parseJsonFileUsingFilePath("com/example/AlternateAdventure.json");
+        gameWorld = JsonFileLoader.parseJsonFileUsingFilePath("AlternateAdventure.json");
         assertEquals("IlliniUnionBookstore", gameWorld.getStartingRoom());
         assertEquals("Foellinger", gameWorld.getEndingRoom());
     }

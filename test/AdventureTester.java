@@ -84,11 +84,11 @@ public class AdventureTester {
         Monster justinBieber = adventure.getGameWorld().getMonsterByName("justin bieber");
         justinBieber.initializeHealth();
 
+        adventure.usersNextMove("take textbook");
         adventure.usersNextMove("Go east");
-        adventure.usersNextMove("take calculator");
-        adventure.attackWithItem(justinBieber, "calculator");
+        adventure.attackWithItem(justinBieber, "textbook");
 
-        assertEquals( 1, justinBieber.getCurrentHealth(), 0.0001);
+        assertEquals( 4.5, justinBieber.getCurrentHealth(), 0.0001);
         assertEquals(27.5, adventure.getPlayer().getCurrentHealth(), 0.0001);
     }
 
@@ -96,6 +96,8 @@ public class AdventureTester {
     public void getPlayerItemInventory() {
         adventure.usersNextMove("take textbook");
         adventure.usersNextMove("go east");
+        adventure.getGameWorld().getRoomByName("HenryAdministrationBuilding")
+                .removeMonster("Justin Bieber");
         adventure.usersNextMove("take pencil");
         adventure.usersNextMove("take calculator");
 
@@ -108,20 +110,20 @@ public class AdventureTester {
 
     @Test
     public void acceptUserInputInAllCapsTest() {
+        adventure.usersNextMove("TAKE TEXTBOOK");
+        assertTrue(adventure.getPlayer().getItemByName("textbook") != null);
+
         adventure.usersNextMove("GO EAST");
         assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
-
-        adventure.usersNextMove("TAKE PENCIL");
-        assertTrue(adventure.getPlayer().getItemByName("pencil") != null);
     }
 
     @Test
     public void acceptUserInputWithLargeSpaces() {
+        adventure.usersNextMove(" take   textbook   ");
+        assertTrue(adventure.getPlayer().getItemByName("textbook") != null);
+
         adventure.usersNextMove("   Go  East  ");
         assertEquals("HenryAdministrationBuilding", adventure.getCurrentRoom().getName());
-
-        adventure.usersNextMove(" take   pencil   ");
-        assertTrue(adventure.getPlayer().getItemByName("pencil") != null);
     }
 
 }

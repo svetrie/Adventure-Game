@@ -24,11 +24,11 @@
       "items": [
         {
           "name": "pencil",
-          "damage": 5.0
+          "damage": 20.0
         },
         {
           "name": "calculator",
-          "damage": 6.5
+          "damage": 25.0
         }
       ],
       "directions": [
@@ -53,11 +53,11 @@
       "items": [
         {
           "name": "caramel mocha",
-          "damage": 15.0
+          "damage": 100.0
         },
         {
           "name": "vanilla latte",
-          "damage": 20.0
+          "damage": 150.0
         }
       ],
       "directions": [
@@ -94,15 +94,15 @@
       "items": [
         {
           "name": "lab coat",
-          "damage": 75
+          "damage": 250
         },
         {
           "name": "beaker",
-          "damage": 75
+          "damage": 300
         },
         {
           "name": "boxing gloves",
-          "damage": 150
+          "damage": 350
         }
       ],
       "directions": [
@@ -127,11 +127,11 @@
       "items": [
         {
           "name": "basketball",
-          "damage": 350.0
+          "damage": 750
         },
         {
           "name": "cupcake",
-          "damage": 400.0
+          "damage": 600
         }
       ],
       "directions": [
@@ -156,7 +156,7 @@
       "item": [
         {
           "name": "lip kit",
-          "damage": 5000
+          "damage": 1000
         }
       ],
       "directions": [
@@ -173,7 +173,7 @@
       "items": [
         {
           "name": "Yeezys",
-          "damage": 1000
+          "damage": 5000
         }
       ],
       "directions": [
