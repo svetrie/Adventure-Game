@@ -17,7 +17,7 @@ public class Adventure {
     private static final String PLAYER_INFO = "playerinfo";
     private static final String DUEL_MONSTER = "duel";
 
-    //Represents possible actions user can take during a duel
+    //User can take additional actions during a duel
     private static final String ATTACK = "attack";
     private static final String ATTACK_WITH_ITEM = "attackwith";
     private static final String DISENGAGE = "disengage";
@@ -25,8 +25,6 @@ public class Adventure {
 
     private GameWorld gameWorld;
     private Player player;
-    private String startingRoomName;
-    private String endingRoomName;
     private Room currentRoom;
 
     public static void main(String[] args) {
@@ -39,7 +37,9 @@ public class Adventure {
             adventure = new Adventure(JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL));
         }
 
-        adventure.getGameWorld().isValidMap(adventure.getStartingRoomName(), adventure.getEndingRoomName());
+        adventure.getGameWorld().isValidMap(adventure.getGameWorld().getStartingRoom(),
+                adventure.getGameWorld().getEndingRoom());
+
         System.out.println();
 
         adventure.playAdventureGame();
@@ -49,9 +49,7 @@ public class Adventure {
         gameWorld = layout;
         gameWorld.initializeRoomMap();
 
-        endingRoomName = gameWorld.getEndingRoom();
-        startingRoomName = gameWorld.getStartingRoom();
-        currentRoom = gameWorld.getRoomByName(startingRoomName);
+        currentRoom = gameWorld.getRoomByName(gameWorld.getStartingRoom());
 
         player = gameWorld.getPlayer();
         player.initializeCurrentHealth();
@@ -67,14 +65,6 @@ public class Adventure {
 
     public Room getCurrentRoom() {
         return currentRoom;
-    }
-
-    public String getStartingRoomName() {
-        return startingRoomName;
-    }
-
-    public String getEndingRoomName() {
-        return endingRoomName;
     }
 
     /**
@@ -103,8 +93,7 @@ public class Adventure {
     }
 
     /**
-     * Removes item from the user's inventory and adds it to the current room
-     * user is in if the item exists
+     * Removes item from player's inventory and adds it to the current room if the item exists
      * @param userInput is the user's input split into words
      * @return String message that tells user whether item was successfully dropped
      */
@@ -196,6 +185,10 @@ public class Adventure {
         }
     }
 
+    /**
+     * Starts a duel between player and the monster if monster exists in the current room
+     * @param monsterName is the name of the monster user wants to duel
+     */
     public void duelValidMonster(String monsterName) {
         if (currentRoom.getMonster(monsterName) != null) {
             System.out.println("You are in a battle with " + monsterName + "!");
@@ -209,7 +202,11 @@ public class Adventure {
     }
 
 
-
+    /**
+     * Validates user input during duel and calls helper functions to perform
+     * user's actions. Will run until player dies, monster dies, or user exits duel.
+     * @param monster is the monster player is dueling
+     */
     public void fightDuel(Monster monster) {
         String[] usersNextMove;
         monster.initializeHealth();
@@ -241,6 +238,12 @@ public class Adventure {
         }
     }
 
+    /**
+     * Allows user to attack monster and reduce its health. Monster will attack user afterward
+     * @param monster is the monster who the player is dueling
+     * @param damage is the net damage (player attack + item damage) monster takes
+     * @return a string message that tells the user the results of his/her attack
+     */
     public String attack(Monster monster, double damage) {
         monster.reduceCurrentHealth(damage - monster.getDefense());
 
@@ -263,6 +266,13 @@ public class Adventure {
         }
     }
 
+    /**
+     * Calls attack function but adds player's item's damage to net damage monster takes
+     * @param monster is the monster the player is dueling
+     * @param itemName is the name of the item used by player to attack monster
+     * @return a string message if player tries to attack monster with an item
+     * they do not have 
+     */
     public String attackWithItem(Monster monster, String itemName) {
        Item attackItem = player.getItemByName(itemName);
 
@@ -281,7 +291,7 @@ public class Adventure {
     public void playAdventureGame() {
         System.out.println("Your journey begins here");
 
-        while(!currentRoom.getName().equals(endingRoomName)) {
+        while(!currentRoom.getName().equals(gameWorld.getEndingRoom())) {
             currentRoom.printCurrentRoom();
             usersNextMove(getUserInput());
         }
