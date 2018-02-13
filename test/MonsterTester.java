@@ -28,22 +28,22 @@ public class MonsterTester {
 
     @Test
     public void getMonsterAttackTest() {
-        assertEquals(15, taylorSwift.getAttack(), 0.0001);
+        assertEquals(150, taylorSwift.getAttack(), 0.0001);
     }
 
     @Test
     public void getMonsterDefenseTest() {
-        assertEquals(12, taylorSwift.getDefense(), 0.0001);
+        assertEquals(125, taylorSwift.getDefense(), 0.0001);
     }
 
     @Test
     public void getMonsterMaxHealthTest() {
-        assertEquals(10, taylorSwift.getMaxHealth(), 0.0001);
+        assertEquals(125, taylorSwift.getMaxHealth(), 0.0001);
     }
 
     @Test
     public void reduceMonsterHealthTest() {
         taylorSwift.reduceCurrentHealth(6);
-        assertEquals(4, taylorSwift.getCurrentHealth(), 0.0001);
+        assertEquals(119, taylorSwift.getCurrentHealth(), 0.0001);
     }
 }

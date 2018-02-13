@@ -75,8 +75,8 @@ public class AdventureTester {
         adventure.usersNextMove("Go east");
         adventure.attack(justinBieber, 15);
 
-        assertEquals( 5, justinBieber.getCurrentHealth(), 0.0001);
-        assertEquals(48, adventure.getPlayer().getCurrentHealth(), 0.0001);
+        assertEquals( 7.5, justinBieber.getCurrentHealth(), 0.0001);
+        assertEquals(27.5, adventure.getPlayer().getCurrentHealth(), 0.0001);
     }
 
     @Test
@@ -88,8 +88,8 @@ public class AdventureTester {
         adventure.usersNextMove("take calculator");
         adventure.attackWithItem(justinBieber, "calculator");
 
-        assertEquals( 2.5, justinBieber.getCurrentHealth(), 0.0001);
-        assertEquals(48, adventure.getPlayer().getCurrentHealth(), 0.0001);
+        assertEquals( 1, justinBieber.getCurrentHealth(), 0.0001);
+        assertEquals(27.5, adventure.getPlayer().getCurrentHealth(), 0.0001);
     }
 
     @Test

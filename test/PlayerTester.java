@@ -33,7 +33,7 @@ public class PlayerTester {
 
     @Test
     public void getPlayerMaxHealthTest() {
-        assertEquals(50, player.getMaxHealth(), 0.0001);
+        assertEquals(30, player.getMaxHealth(), 0.0001);
     }
 
     @Test
@@ -44,33 +44,33 @@ public class PlayerTester {
     @Test
     public void reducePlayerHealthTest() {
         player.reduceCurrentHealth(10);
-        assertEquals(40, player.getCurrentHealth(), 0.0001);
+        assertEquals(20, player.getCurrentHealth(), 0.0001);
     }
 
     @Test
     public void getPlayerInfoTest() {
-        assertEquals("Level: 0, Attack: 15.0, Defense: 10.0, Health: 50.0/50.0", player.getPlayerInfo());
+        assertEquals("Level: 0, Attack: 15.0, Defense: 10.0, Health: 30.0/30.0", player.getPlayerInfo());
     }
 
     @Test
     public void gainExperienceTest() {
         player.gainExperience(gameWorld.getMonsterByName("Justin Bieber"));
-        assertEquals(420.0, player.getTotalExp(), 0.0001);
+        assertEquals(450.0, player.getTotalExp(), 0.0001);
     }
 
     @Test
     public void getExpForNextLevelTest() {
         player.gainExperience(gameWorld.getMonsterByName("Justin Bieber"));
-        assertEquals(436.5, player.getExpForNextLevel(), 0.09);
+        assertEquals(756, player.getExpForNextLevel(), 1);
     }
 
     @Test
     public void levelUpTest() {
         player.gainExperience(gameWorld.getMonsterByName("Justin Bieber"));
 
-        assertEquals(5, player.getLevel());
-        assertEquals(114, player.getAttack(), 1);
-        assertEquals(76, player.getDefense(), 1);
-        assertEquals(185, player.getMaxHealth(), 1);
+        assertEquals(6, player.getLevel());
+        assertEquals(170, player.getAttack(), 1);
+        assertEquals(113, player.getDefense(), 1);
+        assertEquals(145, player.getMaxHealth(), 1);
     }
 }
