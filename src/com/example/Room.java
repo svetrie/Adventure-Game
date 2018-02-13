@@ -10,7 +10,7 @@ public class Room {
     private ArrayList<Item> items = new ArrayList<Item>();
     private Direction[] directions;
     private ArrayList<String> monstersInRoom;
-   // private boolean allMonstersDefeated;
+
     /** Used by the isValidMap method in the GameWorld class to check if a Room object
      * has already been visited by the method */
     private boolean visited;
@@ -50,12 +50,6 @@ public class Room {
         return directions;
     }
 
-    /**
-     * Checks if the direction user entered is a valid direction to move toward from this room
-     * @param directionName is the direction user entered in
-     * @return Direction object of this room whose name matches directionName or null if
-     * no such Direction object exits
-     */
     public Direction getValidDirection(String directionName) {
         for (Direction direction : directions) {
 

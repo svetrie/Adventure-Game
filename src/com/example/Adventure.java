@@ -203,8 +203,8 @@ public class Adventure {
 
 
     /**
-     * Validates user input during duel and calls helper functions to perform
-     * user's actions. Will run until player dies, monster dies, or user exits duel.
+     * Validates user input during duel and calls helper functions to perform user's actions.
+     * Will run until player dies, monster dies, or user exits duel.
      * @param monster is the monster player is dueling
      */
     public void fightDuel(Monster monster) {
@@ -271,7 +271,7 @@ public class Adventure {
      * @param monster is the monster the player is dueling
      * @param itemName is the name of the item used by player to attack monster
      * @return a string message if player tries to attack monster with an item
-     * they do not have 
+     * they do not have
      */
     public String attackWithItem(Monster monster, String itemName) {
        Item attackItem = player.getItemByName(itemName);

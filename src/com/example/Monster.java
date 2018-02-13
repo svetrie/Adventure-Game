@@ -42,6 +42,11 @@ public class Monster {
         currentHealth = maxHealth;
     }
 
+    /**
+     * Prints monsters's health percentage in a progress bar format.
+     * Prints a '*' for each 5% increment of health monster has and
+     * a '-' for each 5% of health lost.
+     */
     public void printStatus() {
         double percentOfHealthRemaining = (currentHealth / maxHealth) * 100;
         double percentOfHealthLost = 100 - percentOfHealthRemaining;

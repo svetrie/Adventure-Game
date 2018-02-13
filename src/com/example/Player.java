@@ -61,6 +61,11 @@ public class Player {
         currentHealth = maxHealth;
     }
 
+    /**
+     * Prints player's health percentage in a progress bar format.
+     * Prints a '*' for each 5% increment of health the player has and
+     * a '-' for each 5% of health lost
+     */
     public void printStatus() {
         double percentOfHealthRemaining = (currentHealth / maxHealth) * 100;
         double percentOfHealthLost = 100 - percentOfHealthRemaining;
@@ -136,6 +141,13 @@ public class Player {
         System.out.println();
     }
 
+    /**
+     * Once a player defeats a monster, this method uses monster's stats to give player
+     * experience points.
+     * Player levels up if experience points surpass experience needed for
+     * next level.
+     * @param monster is the monster the player has defeated
+     */
     public void gainExperience(Monster monster) {
          totalExp += ((monster.getAttack() + monster.getDefense())/2
                 + monster.getMaxHealth()) * DUEL_EXP_MULTIPLIER;
@@ -147,14 +159,21 @@ public class Player {
             lastLevelExp = LEVEL1_EXP;
         }
 
+        /* Not an if/else statement because it is possible for player to level up immediately
+        from 0 to 2 after defeating one monster */
         if (level >= 1) {
 
+            /*Possible for player to repeatedly level up if they gain large amount of experience */
             while(totalExp >= expForNextLevel) {
                 levelUp();
             }
         }
     }
 
+    /**
+     * Increases player's level and stats and calculates experience needed for next level.
+     * Also, restores player's health fully
+     */
     public void levelUp() {
         level ++;
 
