@@ -82,7 +82,6 @@ public class Adventure {
         Item itemTaken = currentRoom.getItemByName(itemName);
 
         if (itemTaken != null && currentRoom.areAllMonstersDefeated()) {
-
             player.addItem(itemTaken);
             currentRoom.removeItem(itemTaken);
 
@@ -106,11 +105,9 @@ public class Adventure {
         String[] itemNameAsArray = Arrays.copyOfRange(userInput, 1, userInput.length);
         String itemName = String.join(" ", itemNameAsArray);
 
-
         Item itemDropped = player.getItemByName(itemName);
 
         if (itemDropped != null) {
-
             player.removeItem(itemDropped);
             currentRoom.addItem(itemDropped);
 
@@ -194,7 +191,6 @@ public class Adventure {
             System.out.println("You are in a battle with " + monsterName + "!");
 
             Monster monster = gameWorld.getMonsterByName(monsterName);
-
             fightDuel(monster);
         } else {
             System.out.println("You can't duel " + monsterName);
@@ -215,11 +211,11 @@ public class Adventure {
             String userInput = getUserInput();
             usersNextMove = userInput.trim().split("\\s+");
 
-            if (usersNextMove[0].equalsIgnoreCase(ATTACK)) {
-                System.out.println(attack(monster, player.getAttack()));
-            } else if (usersNextMove.length > 2 && (usersNextMove[0]
+            if (usersNextMove.length > 2 && (usersNextMove[0]
                     + usersNextMove[1]).equalsIgnoreCase(ATTACK_WITH_ITEM)) {
-                System.out.println(attackWithItem(monster, usersNextMove[3]));
+                System.out.println(attackWithItem(monster, usersNextMove[2]));
+            } else if (usersNextMove[0].equalsIgnoreCase(ATTACK)) {
+                System.out.println(attack(monster, player.getAttack()));
             } else if (usersNextMove[0].equalsIgnoreCase(DISENGAGE)) {
                 System.out.println("You escaped from the duel!");
                 break;
@@ -277,12 +273,10 @@ public class Adventure {
        Item attackItem = player.getItemByName(itemName);
 
         if (attackItem != null) {
-            attack(monster, player.getAttack() + attackItem.getDamage());
+            return attack(monster, player.getAttack() + attackItem.getDamage());
         } else {
-            return "You aren't carrying " + attackItem;
+            return "You aren't carrying " + itemName;
         }
-
-        return "";
     }
 
     /**

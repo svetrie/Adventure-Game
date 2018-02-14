@@ -11,22 +11,10 @@ public class JsonFileLoaderTest {
     GameWorld gameWorld = new GameWorld();
 
     @Test
-    public void parseJsonFileUsingURLTest() {
-        gameWorld = JsonFileLoader.parseJsonFileUsingUrl(DEFAULT_JSON_FILE_URL);
-        assertEquals("MatthewsStreet", gameWorld.getStartingRoom());
-        assertEquals("Siebel1314", gameWorld.getEndingRoom());
-    }
-
-    @Test
     public void parseJsonFileUsingFilePath() {
         gameWorld = JsonFileLoader.parseJsonFileUsingFilePath("AlternateAdventure.json");
         assertEquals("IlliniUnionBookstore", gameWorld.getStartingRoom());
         assertEquals("Foellinger", gameWorld.getEndingRoom());
-    }
-
-    @Test
-    public void parseJsonFileUsingInvalidURLTest() {
-        assertEquals(null, JsonFileLoader.parseJsonFileUsingUrl("askljaskcom"));
     }
 
     @Test

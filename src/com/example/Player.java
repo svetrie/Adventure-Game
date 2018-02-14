@@ -20,7 +20,7 @@ public class Player {
     private double defense;
     @SerializedName("health")
     private double maxHealth;
-    private double currentHealth = maxHealth;
+    private double currentHealth;
 
     private int level;
     private double totalExp;

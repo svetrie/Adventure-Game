@@ -1,5 +1,6 @@
 import com.example.GameWorld;
 import com.example.JsonFileLoader;
+import com.example.Monster;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +43,15 @@ public class GameWorldTester {
     public void getRoomByNameTest() {
         assertEquals("You are in Noyes Laboratory. A mob of students exit Noyes 100 as their lecture ends",
                 gameWorld.getRoomByName("NoyesLaboratory").getDescription());
+    }
+
+    @Test
+    public void getMonsterByNameTest() {
+        Monster monster = gameWorld.getMonsterByName("Justin Bieber");
+
+        assertEquals(12.5, monster.getAttack(), 0.0001);
+        assertEquals(12.5, monster.getDefense(), 0.0001);
+        assertEquals(10.0, monster.getMaxHealth(), 0.0001);
     }
 
 }

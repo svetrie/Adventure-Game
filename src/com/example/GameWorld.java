@@ -30,14 +30,6 @@ public class GameWorld {
     }
 
     public Room getRoomByName(String roomName) {
-        /*for (Room room : rooms) {
-
-            if (room.getName().equalsIgnoreCase(roomName)) {
-                return room;
-            }
-        }
-
-        return null;*/
         return roomMap.get(roomName);
     }
 
